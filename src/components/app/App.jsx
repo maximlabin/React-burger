@@ -9,6 +9,7 @@ function App() {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const url = 'https://norma.nomoreparties.space/api/ingredients';
+
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
@@ -22,6 +23,7 @@ function App() {
         }
         fetchData();
     }, []);
+
     return (
         <div className={styles.app}>
             <AppHeader />

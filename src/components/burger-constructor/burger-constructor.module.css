@@ -19,6 +19,11 @@
     align-items: center;
 }
 
+.scrollable {
+    scrollbar-width: thin;
+    scrollbar-color: #8585AD #2F2F37;
+}
+
 .scrollable_item {
     width: 536px;
     position: relative;
