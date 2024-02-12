@@ -15,7 +15,7 @@ function BurgerConstructor() {
                         </div>
                         <div className={styles.scrollable}>
                             {data.slice(1, -1).map(item => (
-                                <div className={`${styles.scrollable_item} pl-8 mr-2`} key={item.name}>
+                                <div className={`${styles.scrollable_item} pl-8 mr-2`} key={item._id}>
                                     <ConstructorElement text={item.name} price={item.price} thumbnail={item.image} />
                                 </div>
                             ))}
