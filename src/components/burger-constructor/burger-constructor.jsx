@@ -7,21 +7,20 @@ function BurgerConstructor() {
     data.forEach(item => sum += item.price)
     return (
         <div className={`mt-25`}>
-            <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', gap: '16px' }}>
-
+            <div className={styles.container}>
                 {data.length > 0 && (
                     <>
-                        <div style={{ position: 'sticky', top: '0', paddingLeft: '32px', paddingRight: '16px' }}>
+                        <div className={styles.item}>
                             <ConstructorElement type="top" isLocked={true} text={data[0].name} price={data[0].price} thumbnail={data[0].image} />
                         </div>
-                        <div className={`${styles.scrollable}`}>
+                        <div className={styles.scrollable}>
                             {data.slice(1, -1).map(item => (
                                 <div className={`${styles.scrollable_item} pl-8 mr-2`} key={item.name}>
                                     <ConstructorElement text={item.name} price={item.price} thumbnail={item.image} />
                                 </div>
                             ))}
                         </div>
-                        <div style={{ position: 'sticky', top: '0', paddingLeft: '32px', paddingRight: '16px' }}>
+                        <div className={styles.item}>
                             <ConstructorElement
                                 type="bottom"
                                 isLocked={true}
@@ -31,9 +30,7 @@ function BurgerConstructor() {
                             />
                         </div>
                     </>
-
-                )
-                }
+                )}
             </div>
             <div className={`${styles.order} mt-10`}>
                 <div className={`${styles.order_details} mr-10`}>

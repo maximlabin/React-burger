@@ -9,6 +9,20 @@
     align-items: center;
 }
 
+.container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.item {
+    position: sticky;
+    top: 0;
+    padding-left: 32px;
+    padding-right: 16px;
+}
+
 .scrollable {
     position: relative;
     overflow-y: scroll;
