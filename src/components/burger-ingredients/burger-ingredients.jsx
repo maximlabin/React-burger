@@ -7,14 +7,17 @@ function BurgerIngredients(props) {
     const data = props.ingredients.data;
     const tabs = [
         {
+            id: 1,
             name: 'bun',
             title: 'Булки',
         },
         {
+            id: 2,
             name: 'sauce',
             title: 'Соусы',
         },
         {
+            id: 3,
             name: 'main',
             title: 'Начинки',
         },
@@ -28,7 +31,7 @@ function BurgerIngredients(props) {
                     tabs.map((item) => (
                         <Tab
                             value={item.name}
-                            key={item._id}
+                            key={item.id}
                             onClick={setCurrent}
                             active={current === item.name}
                         >{item.title}</Tab>
@@ -38,7 +41,7 @@ function BurgerIngredients(props) {
             <div className={`${styles.scrollable} mt-10`}>
                 {
                     tabs.map(item => (
-                        <section key={item._id}>
+                        <section key={item.id}>
                             <h1 className={`${styles.text} text text_type_main-medium`}>{item.title}</h1>
                             <ul className={`${styles.container} pl-4 pr-4 pb-10 pt-6`}>
                                 {
