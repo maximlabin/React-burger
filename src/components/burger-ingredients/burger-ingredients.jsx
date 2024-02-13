@@ -23,7 +23,7 @@ function BurgerIngredients(props) {
 
     return (
         <>
-            <section style={{ display: 'flex' }}>
+            <section className={`${styles.item}`}>
                 {
                     tabs.map((item) => (
                         <Tab
@@ -43,7 +43,7 @@ function BurgerIngredients(props) {
                             <ul className={`${styles.container} pl-4 pr-4 pb-10 pt-6`}>
                                 {
                                     data.filter(el => item.name === el.type).map(info => (
-                                        <BurgerIngridientItem key={info.name} data={info} />
+                                        <BurgerIngridientItem key={info._id} data={info} />
                                     ))
                                 }
                             </ul>

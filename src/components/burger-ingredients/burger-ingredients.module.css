@@ -1,3 +1,7 @@
+.item {
+    display: flex;
+}
+
 .scrollable {
     overflow-y: auto;
     height: 712px;
