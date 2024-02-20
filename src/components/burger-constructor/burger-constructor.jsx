@@ -63,7 +63,7 @@ function BurgerConstructor(props) {
             </div>
             {isModalOpen && (
                 <Modal onClick={handleCloseModal}>
-                    <OrderDetails id={Math.floor(Math.random() * 100000)} />
+                    <OrderDetails _id={Math.floor(Math.random() * 100000)} />
                 </Modal>
             )}
         </div>
