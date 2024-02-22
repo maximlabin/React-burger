@@ -4,17 +4,17 @@ import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { BASE_URL } from "../../utils/apiConfig.js";
 
 function App() {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
-    const url = 'https://norma.nomoreparties.space/api/ingredients';
 
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
             try {
-                const { data: response } = await axios.get(url);
+                const { data: response } = await axios.get(BASE_URL + '/ingredients');
                 setData(response);
             } catch (error) {
                 console.error(error.message);
@@ -35,7 +35,7 @@ function App() {
                             <BurgerIngredients ingredients={data} />
                         </section>
                         <section className={styles.constructor_item}>
-                            <BurgerConstructor />
+                            <BurgerConstructor ingredients={data} />
                         </section>
                     </>
                 )}

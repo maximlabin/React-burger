@@ -1,0 +1,25 @@
+.modal {
+    position: absolute;
+    left: 32%;
+    top: 15%;
+    width: 720px;
+    border: 1px solid rgba(76, 76, 255, 0.2);
+    border-radius: 30px;
+    background: var(--background-alt);
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    width: 640px;
+}
+
+.closeIcon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-left: auto;
+    outline: none;
+    border: none;
+    background-color: transparent;
+}

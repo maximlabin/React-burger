@@ -2,6 +2,8 @@ import { useState } from 'react';
 import styles from './burger-ingredients.module.css';
 import BurgerIngridientItem from '../burger-ingridient-item/burger-ingridient-item';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
+import PropTypes from 'prop-types';
+
 
 function BurgerIngredients(props) {
     const data = props.ingredients.data;
@@ -24,6 +26,14 @@ function BurgerIngredients(props) {
     ];
     const [current, setCurrent] = useState('bun');
 
+    const handleTab = (item) => {
+        let currentTab = document.getElementById(item.name);
+        if (current !== item.name) {
+            currentTab.scrollIntoView({ behavior: 'smooth' });
+        }
+        setCurrent(item.name);
+    };
+
     return (
         <>
             <section className={`${styles.item}`}>
@@ -32,7 +42,7 @@ function BurgerIngredients(props) {
                         <Tab
                             value={item.name}
                             key={item.id}
-                            onClick={setCurrent}
+                            onClick={() => handleTab(item)}
                             active={current === item.name}
                         >{item.title}</Tab>
                     ))
@@ -41,7 +51,7 @@ function BurgerIngredients(props) {
             <div className={`${styles.scrollable} mt-10`}>
                 {
                     tabs.map(item => (
-                        <section key={item.id}>
+                        <section key={item.id} id={item.name}>
                             <h1 className={`${styles.text} text text_type_main-medium`}>{item.title}</h1>
                             <ul className={`${styles.container} pl-4 pr-4 pb-10 pt-6`}>
                                 {
@@ -58,5 +68,16 @@ function BurgerIngredients(props) {
         </>
     );
 }
+
+BurgerIngredients.propTypes = {
+    ingredients: PropTypes.shape({
+        data: PropTypes.arrayOf(
+            PropTypes.shape({
+                _id: PropTypes.string.isRequired,
+                type: PropTypes.string.isRequired,
+            })
+        ).isRequired,
+    }).isRequired,
+};
 
 export default BurgerIngredients;
