@@ -1,7 +1,7 @@
 import styles from './ingridient-details.module.css';
 import PropTypes from 'prop-types';
 
-function IngridientDetails({ data, head }) {
+function IngredientDetails({ data, head }) {
     return (
         <section className={`${styles.root}`}>
             {
@@ -19,7 +19,7 @@ function IngridientDetails({ data, head }) {
     );
 }
 
-IngridientDetails.propTypes = {
+IngredientDetails.propTypes = {
     data: PropTypes.shape({
         image_large: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
@@ -31,4 +31,4 @@ IngridientDetails.propTypes = {
     head: PropTypes.string,
 };
 
-export default IngridientDetails;
+export default IngredientDetails;
