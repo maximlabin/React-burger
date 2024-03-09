@@ -21,6 +21,7 @@ function Modal({ onClick, children }) {
             document.removeEventListener('keydown', handleKeyPress);
         };
     }, [onClick]);
+
     if (modalOverlay) {
         return ReactDOM.createPortal(
             <ModalOverlay onClick={onClick}>

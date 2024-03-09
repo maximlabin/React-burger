@@ -1,0 +1,12 @@
+.root {
+    width: 585px;
+    max-height: 80px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    overflow: hidden;
+}
+
+.root svg {
+    margin-right: 5px;
+}

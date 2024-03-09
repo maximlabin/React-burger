@@ -1,7 +1,7 @@
 .modal {
     position: absolute;
-    left: 32%;
-    top: 15%;
+    left: 25vw;
+    top: 15vh;
     width: 720px;
     border: 1px solid rgba(76, 76, 255, 0.2);
     border-radius: 30px;
