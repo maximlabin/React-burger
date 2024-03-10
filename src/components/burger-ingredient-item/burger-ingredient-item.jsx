@@ -8,8 +8,7 @@ import PropTypes from 'prop-types';
 import { useDrag } from "react-dnd";
 import { useSelector, useDispatch } from "react-redux";
 import { setSelectedIngredient, clearSelectedIngredient } from '../../services/actions/modal';
-
-const getCount = (item) => (state) => state.ingredients.addedIngredients.filter((ingredient) => ingredient._id === item._id).length;
+import { getCount } from "../../routes";
 function BurgerIngredientItem({ data }) {
     const dispatch = useDispatch()
     const [isModalOpen, setModalOpen] = useState(false);
