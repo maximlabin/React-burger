@@ -1,5 +1,6 @@
 import axios from "axios";
 import { BASE_URL } from "../../utils/apiConfig.js";
+import { clearIngredients } from "./index.js";
 
 export const CREATE_ORDER_REQUEST = 'CREATE_ORDER_REQUEST';
 export const CREATE_ORDER_SUCCESS = 'CREATE_ORDER_SUCCESS';
@@ -21,6 +22,7 @@ export const addOrder = (data) => (dispatch) => {
 
             if (responseData.success) {
                 dispatch({ type: CREATE_ORDER_SUCCESS, payload: responseData });
+                dispatch(clearIngredients())
                 return responseData;
             } else {
                 throw new Error('Order creation failed');

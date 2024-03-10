@@ -8,14 +8,14 @@ import BurgerConstructorItem from '../burger-constructor-item/burger-constructor
 import { useDispatch, useSelector } from "react-redux";
 import { addIngredient } from "../../services/actions";
 import { addOrder } from "../../services/actions/order";
-import { getIngredients, getOrderNumber } from "../../routes";
+import { getIngredients, getOrderNumber, getBun } from "../../routes";
 
 function BurgerConstructor() {
     const dispatch = useDispatch();
     const data = useSelector(getIngredients);
+    const bun = useSelector(getBun);
     const orderNumber = useSelector(getOrderNumber);
     const [isModalOpen, setModalOpen] = useState(false);
-
     const onDropHandler = useCallback((item) => {
         dispatch(addIngredient(item));
     }, [dispatch])
@@ -30,13 +30,23 @@ function BurgerConstructor() {
         })
     });
 
-    const [{ isOverBun }, dropRefBun] = useDrop({
+    const [{ isOverBun }, dropRefTopBun] = useDrop({
         accept: "bun",
         drop(item) {
             onDropHandler(item);
         },
         collect: (monitor) => ({
             isOverBun: monitor.isOver()
+        })
+    });
+
+    const [{ isOverBottomBun }, dropRefBottomBun] = useDrop({
+        accept: "bun",
+        drop(item) {
+            onDropHandler(item);
+        },
+        collect: (monitor) => ({
+            isOverBottomBun: monitor.isOver()
         })
     });
 
@@ -55,8 +65,7 @@ function BurgerConstructor() {
     }, [data]);
 
     const handleOpenModal = () => {
-        console.log(data)
-        if (data.length > 1) dispatch(addOrder(data));
+        dispatch(addOrder([bun, bun, ...data]));
         setModalOpen(true);
     };
 
@@ -65,25 +74,26 @@ function BurgerConstructor() {
     };
 
     const borderColor = isOver ? "#00cccc" : "#131316";
-    const borderColorBun = isOverBun ? "#4c4cff" : "#131316";
+    const borderColorTopBun = isOverBun ? "#4c4cff" : "#131316";
+    const borderColorBottomBun = isOverBottomBun ? "#4c4cff" : "#131316";
 
     return (
         <div className={`mt-25`}>
             <div className={styles.container}>
                 <>
-                    <div className={styles.item} ref={dropRefBun} style={{ borderColor: borderColorBun }}>
-                        {data && data.length > 0 && (
+                    <div className={styles.item} ref={dropRefTopBun} style={{ borderColor: borderColorTopBun }}>
+                        {bun && (
                             <ConstructorElement
                                 type="top"
                                 isLocked={true}
-                                text={data[0].name + " (верх)"}
-                                price={data[0].price}
-                                thumbnail={data[0].image}
+                                text={bun.name + " (верх)"}
+                                price={bun.price}
+                                thumbnail={bun.image}
                             />
                         )}
                     </div>
                     <div className={styles.scrollable} ref={dropRef} style={{ borderColor }}>
-                        {data && data.length > 1 ? data.slice(1).map((item, index) => (
+                        {data && data.length >= 1 ? data.map((item, index) => (
                             <div className={`${styles.scrollable_item} mr-2`} key={item.uniqId}>
                                 <BurgerConstructorItem item={item} index={index} isLocked={false} />
                             </div>
@@ -93,8 +103,8 @@ function BurgerConstructor() {
                             </div>
                         )}
                     </div>
-                    <div className={styles.item} style={{ borderColor: borderColorBun }}>
-                        {data && data.length > 0 && <ConstructorElement type="bottom" isLocked={true} text={data[0].name + " (низ)"} price={data[0].price} thumbnail={data[0].image} />}
+                    <div className={styles.item} style={{ borderColor: borderColorBottomBun }} ref={dropRefBottomBun}>
+                        {bun && <ConstructorElement type="bottom" isLocked={true} text={bun.name + " (низ)"} price={bun.price} thumbnail={bun.image} />}
                     </div>
                 </>
             </div>
@@ -103,7 +113,7 @@ function BurgerConstructor() {
                     <h1 className={`mr-2`}>{totalPrice}</h1>
                     <CurrencyIcon type="primary" />
                 </div>
-                <Button htmlType="button" onClick={handleOpenModal} >
+                <Button htmlType="button" onClick={handleOpenModal} disabled={bun._id ? false : true}>
                     Оформить заказ
                 </Button>
             </div>

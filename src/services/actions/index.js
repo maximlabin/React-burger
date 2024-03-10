@@ -3,6 +3,7 @@ import uniqid from 'uniqid';
 export const ADD_INGREDIENT = 'ADD_INGREDIENT';
 export const DELETE_INGREDIENT = 'DELETE_INGREDIENT';
 export const MOVE_CARD = 'MOVE_CARD';
+export const CLEAR_ADDED_INGREDIENTS = 'CLEAR_ADDED_INGREDIENTS';
 
 export const addIngredient = (ingredient) => ({
     type: ADD_INGREDIENT,
@@ -21,3 +22,7 @@ export const moveCard = (dragIndex, hoverIndex) => ({
         hoverIndex: hoverIndex
     }
 })
+
+export const clearIngredients = () => ({
+    type: CLEAR_ADDED_INGREDIENTS,
+});
