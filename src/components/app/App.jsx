@@ -1,37 +1,52 @@
 import AppHeader from "../app-header/app-header";
 import styles from "./app.module.css";
-import BurgerIngredients from "../burger-ingredients/burger-ingredients";
-import BurgerConstructor from "../burger-constructor/burger-constructor";
-import { HTML5Backend } from "react-dnd-html5-backend";
-import { DndProvider } from "react-dnd";
 import { useEffect } from "react";
 import { getIngredients } from "../../services/actions/getIngredients";
 import { useDispatch } from "react-redux";
+import { Routes, Route } from 'react-router-dom';
+import { HomePage, PageNotFound, Register, Login, ForgotPassword, ResetPassword, Profile } from "../../pages/paths";
+import IngredientDetails from "../ingredient-details/ingredient-details";
+import ProtectedRouteElement from "../protected-route/protected-route";
+import { useLocation, useNavigate } from "react-router-dom";
+import Modal from '../modal/modal';
 
 function App() {
-    const dispatch = useDispatch()
-
+    const dispatch = useDispatch();
+    const location = useLocation();
+    const navigate = useNavigate();
+    let state = location.state;
     useEffect(() => {
         dispatch(getIngredients());
     }, [dispatch])
-
+    const handleCloseModal = () => {
+        navigate(-1);
+    }
     return (
         <div className={styles.app}>
             <AppHeader />
-            <DndProvider backend={HTML5Backend}>
-                <main className={styles.main}>
-                    <>
-                        <section className={styles.ingredients}>
-                            <h1 className={`${styles.title} text text_type_main-large mt-10 mb-5`}>Соберите бургер</h1>
-                            <BurgerIngredients />
-                        </section>
-                        <section className={styles.constructor_item}>
-                            <BurgerConstructor />
-                        </section>
-                    </>
-                </main>
-            </DndProvider>
-        </div>
+            <Routes location={state?.backgroundLocation || location}>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/login" element={<Login />} exact={true} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/reset-password" element={<ResetPassword />} />
+                <Route path="/profile" element={<ProtectedRouteElement />} />
+                <Route path="profile/order" element={<ProtectedRouteElement />} />
+                <Route path="/ingredients/:_id" element={<IngredientDetails head={'Детали ингредиента'} />} />
+                <Route path="*" element={<PageNotFound exact={true} />} />
+            </Routes>
+            {state?.backgroundLocation && (
+                <Routes>
+                    <Route path='/ingredients/:_id' element={
+                        <Modal onClick={handleCloseModal}>
+                            <IngredientDetails head={'Детали ингредиента'} />
+                        </Modal>
+                    } />
+
+                </Routes>
+            )
+            }
+        </div >
     );
 }
 

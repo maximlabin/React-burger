@@ -43,8 +43,6 @@ function BurgerConstructorItem({ item, index, isLocked }) {
                 (dragIndex > hoverIndex && hoverClientY > hoverMiddleY)) {
                 return;
             }
-            console.log('message');
-
             dispatch(moveCard(dragIndex, hoverIndex));
             hoverItem.index = hoverIndex;
         },

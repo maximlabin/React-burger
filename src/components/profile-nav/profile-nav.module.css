@@ -1,0 +1,23 @@
+.link {
+    display: flex;
+    color: var(--text-inactive-color);
+    text-decoration: none;
+    align-items: center;
+    border: none;
+    outline: none;
+    padding: 0;
+    height: 64px;
+    text-align: start;
+    background-color: var(--background-alt);
+}
+
+.menu {
+    display: flex;
+    justify-content: start;
+    flex-direction: column;
+    max-width: 320px;
+}
+
+.link:hover {
+    color: var(--white);
+}

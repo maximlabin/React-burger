@@ -1,0 +1,14 @@
+.root {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    max-height: 760px;
+    height: 50vh;
+    width: 100%;
+}
+
+.link {
+    color: #4C4CFF;
+    text-decoration: none;
+}
