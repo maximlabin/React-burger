@@ -1,56 +1,47 @@
 import styles from './login.module.css';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../services/actions/user';
+import { useForm } from '../../hooks/useForm';
 
 function Login() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { auth } = useSelector(store => store.user);
-    const [userData, setUserData] = useState({
-        email: '',
-        password: ''
-    });
+    const { values, handleChange } = useForm({ email: '', password: '' });
 
     useEffect(() => {
         if (auth) {
             navigate("/");
         }
-    });
+    }, [auth, navigate]);
 
-    const changeForm = (e, field) => {
-        if (field === 'email') {
-            setUserData({ ...userData, email: e.target.value });
-        } else if (field === 'password') {
-            setUserData({ ...userData, password: e.target.value });
-        }
-    }
     const onLogin = e => {
         e.preventDefault();
-        dispatch(login(userData));
+        dispatch(login(values));
     }
 
     return (
         <div className={styles.root}>
             <div className={styles.main}>
                 <h1 className='text text_type_main-medium mb-8'>Вход</h1>
-                <form onSubmit={(e) => onLogin(e)} className={styles.form}>
+                <form onSubmit={onLogin} className={styles.form}>
                     <Input
                         type={'text'}
                         placeholder={'E-mail'}
-                        onChange={e => changeForm(e, 'email')}
-                        value={userData.email}
-                        name={'name'}
+                        onChange={handleChange}
+                        value={values.email}
+                        name={'email'}
                         error={false}
                         errorText={'Ошибка'}
                         size={'default'} />
                     <Input
                         type={'password'}
                         placeholder={'Пароль'}
-                        onChange={e => changeForm(e, 'password')}
-                        value={userData.password}
+                        onChange={handleChange}
+                        value={values.password}
                         name={'password'}
                         error={false}
                         errorText={'Ошибка'}

@@ -4,16 +4,17 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { forgotPassword } from '../../services/actions/user';
+import { useForm } from '../../hooks/useForm'
 
 function ForgotPassword() {
     const { auth } = useSelector(store => store.user);
-    const [email, setEmail] = useState('');
+    const { values, handleChange } = useForm({});
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const sendEmail = e => {
         e.preventDefault();
-        dispatch(forgotPassword(email, navigate));
+        dispatch(forgotPassword(values.email, navigate));
     }
 
     useEffect(() => {
@@ -30,8 +31,8 @@ function ForgotPassword() {
                     <Input
                         type={'text'}
                         placeholder={'Укажите e-mail'}
-                        onChange={e => setEmail(e.target.value)}
-                        value={email}
+                        onChange={handleChange}
+                        value={values.email}
                         name={'e-mail'}
                         error={false}
                         errorText={'Ошибка'}

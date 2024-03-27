@@ -2,6 +2,14 @@ import axios from 'axios';
 import { BASE_URL } from "../../utils/apiConfig.js";
 import { setCookie, getCookie, deleteCookie } from '../cookies';
 
+const instance = axios.create({
+    baseURL: BASE_URL,
+    timeout: 5000,
+    headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+    }
+})
+
 export const CREATE_USER_REQUEST = 'CREATE_USER_REQUEST';
 export const CREATE_USER_SUCCESS = 'CREATE_USER_SUCCESS';
 export const CREATE_USER_ERROR = 'CREATE_USER_ERROR';
@@ -11,12 +19,8 @@ export const forgotPassword = (email, navigate) => (dispatch) => {
     const fetchData = async () => {
         dispatch({ type: CREATE_USER_REQUEST });
         try {
-            const response = await axios.post(`${BASE_URL}/password-reset`, {
+            const response = await instance.post("/password-reset", {
                 email: email,
-            }, {
-                headers: {
-                    "Content-Type": "application/json;charset=utf-8",
-                },
             });
 
             const responseData = response.data;
@@ -39,13 +43,9 @@ export const resetPassword = (userData, navigate) => (dispatch) => {
     const fetchData = async () => {
         dispatch({ type: CREATE_USER_REQUEST });
         try {
-            const response = await axios.post(`${BASE_URL}/password-reset`, {
+            const response = await instance.post("/password-reset", {
                 password: userData.password,
                 token: userData.code,
-            }, {
-                headers: {
-                    "Content-Type": "application/json;charset=utf-8",
-                },
             });
 
             const responseData = response.data;
@@ -67,13 +67,9 @@ export const login = (data) => (dispatch) => {
     const fetchData = async () => {
         dispatch({ type: CREATE_USER_REQUEST });
         try {
-            const response = await axios.post(`${BASE_URL}/auth/login`, {
+            const response = await instance.post("/auth/login", {
                 email: data.email,
                 password: data.password,
-            }, {
-                headers: {
-                    "Content-Type": "application/json;charset=utf-8",
-                },
             });
 
             const responseData = response.data;
@@ -98,14 +94,10 @@ export const register = (data) => (dispatch) => {
     const fetchData = async () => {
         dispatch({ type: CREATE_USER_REQUEST });
         try {
-            const response = await axios.post(`${BASE_URL}/auth/register`, {
+            const response = await instance.post("/auth/register", {
                 email: data.email,
                 password: data.password,
                 name: data.name,
-            }, {
-                headers: {
-                    "Content-Type": "application/json;charset=utf-8",
-                },
             });
 
             const responseData = response.data;
@@ -130,12 +122,8 @@ export const logout = () => (dispatch) => {
     const fetchData = async () => {
         dispatch({ type: CREATE_USER_REQUEST });
         try {
-            const response = await axios.post(`${BASE_URL}/auth/logout`, {
+            const response = await instance.post("/auth/logout", {
                 token: getCookie('refreshToken')
-            }, {
-                headers: {
-                    "Content-Type": "application/json;charset=utf-8",
-                },
             });
 
             const responseData = response.data;
@@ -162,9 +150,8 @@ export const getUser = (userData, setUserData) => (dispatch) => {
         dispatch({ type: CREATE_USER_REQUEST });
         const token = getCookie('accessToken');
         try {
-            const responseData = await axios.get(`${BASE_URL}/auth/user`, {
+            const responseData = await instance.get("/auth/user", {
                 headers: {
-                    "Content-Type": "application/json;charset=utf-8",
                     "authorization": token,
                 },
             });
@@ -190,13 +177,12 @@ export const updateUser = (userData) => (dispatch) => {
         dispatch({ type: CREATE_USER_REQUEST });
         const token = getCookie('accessToken');
         try {
-            const responseData = await axios.patch(`${BASE_URL}/auth/user`, {
+            const responseData = await instance.patch(`${BASE_URL}/auth/user`, {
                 name: userData.name,
                 email: userData.email,
                 password: userData.password,
             }, {
                 headers: {
-                    "Content-Type": "application/json;charset=utf-8",
                     "authorization": token,
                 },
             });
@@ -217,12 +203,8 @@ export const getNewToken = () => (dispatch) => {
     const fetchData = async () => {
         dispatch({ type: CREATE_USER_REQUEST });
         try {
-            const response = await axios.post(`${BASE_URL}/auth/token`, {
+            const response = await instance.post("/auth/token", {
                 token: getCookie('refreshToken'),
-            }, {
-                headers: {
-                    "Content-Type": "application/json;charset=utf-8",
-                },
             });
             const responseData = response.data;
             if (responseData.success) {

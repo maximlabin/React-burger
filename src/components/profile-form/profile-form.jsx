@@ -6,10 +6,6 @@ import { useDispatch } from 'react-redux';
 
 function ProfileForm() {
     const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(getUser(userData, setUserData));
-    }, []);
-
     const [userData, setUserData] = useState(
         {
             name: '',
@@ -17,6 +13,10 @@ function ProfileForm() {
             password: '',
         }
     )
+    useEffect(() => {
+        dispatch(getUser(userData, setUserData));
+    }, [dispatch, setUserData, userData]);
+
     const onChangeFormData = (e, field) => {
         if (field === 'name') {
             setUserData({ ...userData, name: e.target.value });

@@ -14,7 +14,7 @@ function App() {
     const dispatch = useDispatch();
     const location = useLocation();
     const navigate = useNavigate();
-    let state = location.state;
+    const state = location.state;
     useEffect(() => {
         dispatch(getIngredients());
     }, [dispatch])
@@ -30,8 +30,8 @@ function App() {
                 <Route path="/register" element={<Register />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
                 <Route path="/reset-password" element={<ResetPassword />} />
-                <Route path="/profile" element={<ProtectedRouteElement />} />
-                <Route path="profile/order" element={<ProtectedRouteElement />} />
+                <Route path="/profile" element={<ProtectedRouteElement><Profile /></ProtectedRouteElement>} />
+                <Route path="profile/order" element={<ProtectedRouteElement><Profile /></ProtectedRouteElement>} />
                 <Route path="/ingredients/:_id" element={<IngredientDetails head={'Детали ингредиента'} />} />
                 <Route path="*" element={<PageNotFound exact={true} />} />
             </Routes>

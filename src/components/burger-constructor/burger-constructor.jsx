@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addIngredient } from "../../services/actions";
 import { addOrder } from "../../services/actions/order";
 import { getIngredients, getOrderNumber, getBun } from "../../routes";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function BurgerConstructor() {
     const dispatch = useDispatch();
@@ -22,7 +22,6 @@ function BurgerConstructor() {
     }, [dispatch])
     const { auth } = useSelector(store => store.user);
     const navigate = useNavigate();
-    const location = useLocation();
 
     const [{ isOver }, dropRef] = useDrop({
         accept: "ingredient",

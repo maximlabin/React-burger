@@ -9,15 +9,13 @@ function HomePage() {
     return (
         <DndProvider backend={HTML5Backend}>
             <main className={styles.main}>
-                <>
-                    <section className={styles.ingredients}>
-                        <h1 className={`${styles.title} text text_type_main-large mt-10 mb-5`}>Соберите бургер</h1>
-                        <BurgerIngredients />
-                    </section>
-                    <section className={styles.constructor_item}>
-                        <BurgerConstructor />
-                    </section>
-                </>
+                <section className={styles.ingredients}>
+                    <h1 className={`${styles.title} text text_type_main-large mt-10 mb-5`}>Соберите бургер</h1>
+                    <BurgerIngredients />
+                </section>
+                <section className={styles.constructor_item}>
+                    <BurgerConstructor />
+                </section>
             </main>
         </DndProvider>
     )

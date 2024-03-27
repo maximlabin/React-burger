@@ -1,20 +1,25 @@
 import { useSelector } from "react-redux";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation, Navigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { Profile } from "../../pages/paths";
-import { getCookie } from "../../services/cookies";
+import PropTypes from 'prop-types';
 
-function ProtectedRouteElement({ path, children }) {
+function ProtectedRouteElement({ children }) {
     const { auth } = useSelector(store => store.user);
     const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
         if (!auth) {
-            navigate("/login");
+            navigate("/login", { state: { from: location } });
         }
-    }, [auth, navigate]);
+    }, [auth, navigate, location]);
 
-    return <Profile path={path}>{children}</Profile>;
+    return auth ? children : <Navigate to="/login" state={{ from: location }} />;;
 }
+
+ProtectedRouteElement.propTypes = {
+    children: PropTypes.node.isRequired,
+};
+
 
 export default ProtectedRouteElement;

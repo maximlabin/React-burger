@@ -2,38 +2,25 @@ import styles from './register.module.css';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { register } from '../../services/actions/user';
+import { useForm } from '../../hooks/useForm';
 
 function Register() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { auth } = useSelector(store => store.user);
-    const [userData, setUserData] = useState({
-        email: '',
-        password: '',
-        name: '',
-    });
-
-    const changeForm = (e, field) => {
-        if (field === 'email') {
-            setUserData({ ...userData, email: e.target.value });
-        } else if (field === 'password') {
-            setUserData({ ...userData, password: e.target.value });
-        } else if (field === 'name') {
-            setUserData({ ...userData, name: e.target.value });
-        }
-    };
+    const { values, handleChange } = useForm({ email: '', password: '', name: '' });
 
     useEffect(() => {
         if (auth) {
             navigate("/");
         }
-    });
+    }, [auth, navigate]);
 
     const onRegister = (e) => {
         e.preventDefault();
-        dispatch(register(userData));
+        dispatch(register(values));
         navigate('/');
     };
 
@@ -41,12 +28,12 @@ function Register() {
         <div className={styles.root}>
             <div className={styles.main}>
                 <h1 className="text text_type_main-medium mb-8">Регистрация</h1>
-                <form onSubmit={e => onRegister(e)} className={styles.form}>
+                <form onSubmit={onRegister} className={styles.form}>
                     <Input
                         type="text"
                         placeholder="Имя"
-                        onChange={e => changeForm(e, 'name')}
-                        value={userData.name}
+                        onChange={handleChange}
+                        value={values.name}
                         name="name"
                         error={false}
                         errorText="Ошибка"
@@ -55,9 +42,9 @@ function Register() {
                     <Input
                         type="text"
                         placeholder="E-mail"
-                        onChange={e => changeForm(e, 'email')}
-                        value={userData.email}
-                        name="e-mail"
+                        onChange={handleChange}
+                        value={values.email}
+                        name="email"
                         error={false}
                         errorText="Ошибка"
                         size="default"
@@ -65,8 +52,8 @@ function Register() {
                     <Input
                         type="password"
                         placeholder="Пароль"
-                        onChange={e => changeForm(e, 'password')}
-                        value={userData.password}
+                        onChange={handleChange}
+                        value={values.password}
                         icon='HideIcon'
                         name="password"
                         error={false}

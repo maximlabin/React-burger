@@ -2,6 +2,7 @@ import styles from './ingridient-details.module.css';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { getData } from '../../routes';
+import PropTypes from 'prop-types';
 
 function IngredientDetails({ head }) {
     const { _id } = useParams();
@@ -28,5 +29,10 @@ function IngredientDetails({ head }) {
         </section>
     );
 }
+
+IngredientDetails.propTypes = {
+    head: PropTypes.string,
+};
+
 
 export default IngredientDetails;
