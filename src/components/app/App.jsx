@@ -19,8 +19,7 @@ function App() {
         dispatch(getIngredients());
     }, [dispatch])
     const handleCloseModal = () => {
-        console.log("1");
-        navigate('/');
+        navigate(-1);
     }
     return (
         <div className={styles.app}>
