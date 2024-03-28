@@ -10,6 +10,7 @@ import { addIngredient } from "../../services/actions";
 import { addOrder } from "../../services/actions/order";
 import { getIngredients, getOrderNumber, getBun } from "../../routes";
 import { useNavigate } from "react-router-dom";
+import uniqid from 'uniqid';
 
 function BurgerConstructor() {
     const dispatch = useDispatch();
@@ -56,7 +57,8 @@ function BurgerConstructor() {
     const item = {
         name: 'Выберите начинку',
         image: 'https://code.s3.yandex.net/react/code/meat-01.png',
-        price: 0
+        price: 0,
+        uniqId: uniqid(),
     }
 
     const totalPrice = useMemo(() => {
@@ -70,9 +72,10 @@ function BurgerConstructor() {
     const handleOpenModal = () => {
         if (!auth) {
             navigate('/login');
+        } else {
+            dispatch(addOrder([bun, bun, ...data]));
+            setModalOpen(true);
         }
-        dispatch(addOrder([bun, bun, ...data]));
-        setModalOpen(true);
     };
 
     const handleCloseModal = () => {

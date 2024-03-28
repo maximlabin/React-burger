@@ -15,7 +15,7 @@ function ProfileForm() {
     )
     useEffect(() => {
         dispatch(getUser(userData, setUserData));
-    }, [dispatch, setUserData, userData]);
+    }, []);
 
     const onChangeFormData = (e, field) => {
         if (field === 'name') {
