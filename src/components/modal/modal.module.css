@@ -1,11 +1,13 @@
 .modal {
     position: absolute;
-    left: 25vw;
     top: 15vh;
+    left: 50%;
+    transform: translateX(-50%);
     width: 720px;
     border: 1px solid rgba(76, 76, 255, 0.2);
     border-radius: 30px;
     background: var(--background-alt);
+    z-index: -1;
 }
 
 .header {

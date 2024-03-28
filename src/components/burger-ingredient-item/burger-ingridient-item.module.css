@@ -3,6 +3,7 @@
     position: relative;
     width: 272px;
     flex-direction: column;
+    text-decoration: none;
 }
 
 .name {
