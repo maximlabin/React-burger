@@ -4,7 +4,7 @@ import { ADD_INGREDIENT, DELETE_INGREDIENT, MOVE_CARD, CLEAR_ADDED_INGREDIENTS }
 const initialState = {
     data: [],
     bun: {
-        name: 'Добавить булку',
+        name: 'Выберите булку',
         type: 'bun',
         image: 'https://code.s3.yandex.net/react/code/bun-01.png',
         price: 0

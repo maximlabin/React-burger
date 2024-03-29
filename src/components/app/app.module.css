@@ -2,32 +2,3 @@
     text-align: center;
     overflow: hidden;
 }
-
-.main {
-    margin: 0 auto;
-    width: 1240px;
-    display: flex;
-    height: 912px;
-    justify-content: space-between;
-    max-width: 1260px;
-    overflow: hidden;
-}
-  
-.ingredients {
-    margin: 0;
-    padding: 0;
-    width: 600px;
-    background-color: var(--background-alt);
-}
-  
-.constructor_item {
-    margin: 0;
-    padding: 0;
-    width: 600px;
-    background-color: var(--background-alt);
-}
-  
-.title {
-    text-align: left;
-    color: var(--text-primary-color);
-}

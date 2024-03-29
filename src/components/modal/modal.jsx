@@ -25,23 +25,22 @@ function Modal({ onClick, children }) {
     if (modalOverlay) {
         return ReactDOM.createPortal(
             <ModalOverlay onClick={onClick}>
-                <div className={`${styles.modal} pt-10`}>
+                <div className={`${styles.modal} pt-10`} onClick={(e) => e.stopPropagation()}>
                     <div className={styles.header}>
-                        <button className={`${styles.closeIcon} mt-15 mr-10`} onClick={onClick}>
+                        <button className={`${styles.closeIcon} mt-15 mr-10`}>
                             <CloseIcon type="primary" />
                         </button>
                     </div>
                     {children}
                 </div>
-            </ModalOverlay>,
+            </ModalOverlay >,
             modalOverlay
         );
     } else {
         return null;
     }
 }
-
-ModalOverlay.propTypes = {
+Modal.propTypes = {
     children: PropTypes.element.isRequired,
     onClick: PropTypes.func.isRequired,
 };

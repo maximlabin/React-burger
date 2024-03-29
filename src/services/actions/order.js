@@ -1,6 +1,5 @@
-import axios from "axios";
-import { BASE_URL } from "../../utils/apiConfig.js";
 import { clearIngredients } from "./index.js";
+import { axiosInstance } from "../axios.js";
 
 export const CREATE_ORDER_REQUEST = 'CREATE_ORDER_REQUEST';
 export const CREATE_ORDER_SUCCESS = 'CREATE_ORDER_SUCCESS';
@@ -10,12 +9,8 @@ export const addOrder = (data) => (dispatch) => {
     const fetchData = async () => {
         dispatch({ type: CREATE_ORDER_REQUEST });
         try {
-            const response = await axios.post(`${BASE_URL}/orders`, {
+            const response = await axiosInstance.post(`/orders`, {
                 ingredients: data,
-            }, {
-                headers: {
-                    "Content-Type": "application/json;charset=utf-8",
-                },
             });
 
             const responseData = response.data;

@@ -4,6 +4,7 @@ import styles from './burger-constructor-item.module.css';
 import { useDrag, useDrop } from 'react-dnd';
 import { useDispatch } from 'react-redux';
 import { deleteIngredient, moveCard } from '../../services/actions';
+import PropTypes from 'prop-types';
 
 function BurgerConstructorItem({ item, index, isLocked }) {
     const ref = useRef(null);
@@ -43,8 +44,6 @@ function BurgerConstructorItem({ item, index, isLocked }) {
                 (dragIndex > hoverIndex && hoverClientY > hoverMiddleY)) {
                 return;
             }
-            console.log('message');
-
             dispatch(moveCard(dragIndex, hoverIndex));
             hoverItem.index = hoverIndex;
         },
@@ -67,5 +66,16 @@ function BurgerConstructorItem({ item, index, isLocked }) {
         </div>
     );
 }
+
+BurgerConstructorItem.propTypes = {
+    item: PropTypes.shape({
+        uniqId: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        price: PropTypes.number.isRequired,
+        image: PropTypes.string.isRequired,
+    }).isRequired,
+    index: PropTypes.number.isRequired,
+    isLocked: PropTypes.bool.isRequired,
+};
 
 export default BurgerConstructorItem;
