@@ -1,5 +1,5 @@
 import { clearIngredients } from "./index.js";
-import { instance } from "../axios.js";
+import { axiosInstance } from "../axios.js";
 
 export const CREATE_ORDER_REQUEST = 'CREATE_ORDER_REQUEST';
 export const CREATE_ORDER_SUCCESS = 'CREATE_ORDER_SUCCESS';
@@ -9,7 +9,7 @@ export const addOrder = (data) => (dispatch) => {
     const fetchData = async () => {
         dispatch({ type: CREATE_ORDER_REQUEST });
         try {
-            const response = await instance.post(`/orders`, {
+            const response = await axiosInstance.post(`/orders`, {
                 ingredients: data,
             });
 

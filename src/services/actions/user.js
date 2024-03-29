@@ -1,14 +1,6 @@
-import axios from 'axios';
 import { BASE_URL } from "../../utils/apiConfig.js";
 import { setCookie, getCookie, deleteCookie } from '../cookies';
-
-const instance = axios.create({
-    baseURL: BASE_URL,
-    timeout: 5000,
-    headers: {
-        'Content-Type': 'application/json;charset=utf-8',
-    }
-})
+import { axiosInstance } from "../axios.js";
 
 export const CREATE_USER_REQUEST = 'CREATE_USER_REQUEST';
 export const CREATE_USER_SUCCESS = 'CREATE_USER_SUCCESS';
@@ -19,7 +11,7 @@ export const forgotPassword = (email, navigate) => (dispatch) => {
     const fetchData = async () => {
         dispatch({ type: CREATE_USER_REQUEST });
         try {
-            const response = await instance.post("/password-reset", {
+            const response = await axiosInstance.post("/password-reset", {
                 email: email,
             });
 
@@ -43,7 +35,7 @@ export const resetPassword = (userData, navigate) => (dispatch) => {
     const fetchData = async () => {
         dispatch({ type: CREATE_USER_REQUEST });
         try {
-            const response = await instance.post("/password-reset", {
+            const response = await axiosInstance.post("/password-reset", {
                 password: userData.password,
                 token: userData.code,
             });
@@ -67,7 +59,7 @@ export const login = (data) => (dispatch) => {
     const fetchData = async () => {
         dispatch({ type: CREATE_USER_REQUEST });
         try {
-            const response = await instance.post("/auth/login", {
+            const response = await axiosInstance.post("/auth/login", {
                 email: data.email,
                 password: data.password,
             });
@@ -94,7 +86,7 @@ export const register = (data) => (dispatch) => {
     const fetchData = async () => {
         dispatch({ type: CREATE_USER_REQUEST });
         try {
-            const response = await instance.post("/auth/register", {
+            const response = await axiosInstance.post("/auth/register", {
                 email: data.email,
                 password: data.password,
                 name: data.name,
@@ -122,7 +114,7 @@ export const logout = () => (dispatch) => {
     const fetchData = async () => {
         dispatch({ type: CREATE_USER_REQUEST });
         try {
-            const response = await instance.post("/auth/logout", {
+            const response = await axiosInstance.post("/auth/logout", {
                 token: getCookie('refreshToken')
             });
 
@@ -150,7 +142,7 @@ export const getUser = (userData, setUserData) => (dispatch) => {
         dispatch({ type: CREATE_USER_REQUEST });
         const token = getCookie('accessToken');
         try {
-            const responseData = await instance.get("/auth/user", {
+            const responseData = await axiosInstance.get("/auth/user", {
                 headers: {
                     "authorization": token,
                 },
@@ -177,7 +169,7 @@ export const updateUser = (userData) => (dispatch) => {
         dispatch({ type: CREATE_USER_REQUEST });
         const token = getCookie('accessToken');
         try {
-            const responseData = await instance.patch(`${BASE_URL}/auth/user`, {
+            const responseData = await axiosInstance.patch(`${BASE_URL}/auth/user`, {
                 name: userData.name,
                 email: userData.email,
                 password: userData.password,
@@ -203,7 +195,7 @@ export const getNewToken = () => (dispatch) => {
     const fetchData = async () => {
         dispatch({ type: CREATE_USER_REQUEST });
         try {
-            const response = await instance.post("/auth/token", {
+            const response = await axiosInstance.post("/auth/token", {
                 token: getCookie('refreshToken'),
             });
             const responseData = response.data;

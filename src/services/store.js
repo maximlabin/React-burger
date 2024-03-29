@@ -9,10 +9,9 @@ const rootReducer = combineReducers({
     ingredients: ingredientReducer,
     order: orderReducer,
     modal: modalReducer,
-    user: userReducer,
+    user: userReducer
 })
 
 export const store = configureStore({
-    reducer: rootReducer
-}
-);
+    reducer: rootReducer,
+});

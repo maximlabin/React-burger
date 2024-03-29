@@ -1,4 +1,4 @@
-import { instance } from "../axios";
+import { axiosInstance } from "../axios";
 
 export const GET_INGREDIENT_REQUEST = 'GET_INGREDIENT_REQUEST';
 export const GET_INGREDIENT_SUCCESS = 'GET_INGREDIENT_SUCCESS';
@@ -8,7 +8,7 @@ export const getIngredients = () => (dispatch) => {
     const fetchData = async () => {
         dispatch({ type: GET_INGREDIENT_REQUEST });
         try {
-            const { data: response } = await instance.get('/ingredients');
+            const { data: response } = await axiosInstance.get('/ingredients');
             dispatch({ type: GET_INGREDIENT_SUCCESS, payload: response.data })
         } catch (error) {
             dispatch({ type: GET_INGREDIENT_ERROR, payload: error })
