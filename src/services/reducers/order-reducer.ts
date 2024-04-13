@@ -1,12 +1,18 @@
 import { CREATE_ORDER_REQUEST, CREATE_ORDER_SUCCESS, CREATE_ORDER_ERROR } from '../actions/order';
 
-const initialState = {
+interface OrderState {
+    order: null | any;
+    isLoading: boolean;
+    error: null | string;
+}
+
+const initialState: OrderState = {
     order: null,
     isLoading: false,
     error: null
-}
+};
 
-export const orderReducer = (state = initialState, action) => {
+export const orderReducer = (state = initialState, action: any) => {
     switch (action.type) {
         case CREATE_ORDER_REQUEST:
             return {

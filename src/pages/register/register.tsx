@@ -2,15 +2,20 @@ import styles from './register.module.css';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { FormEvent, useEffect } from 'react';
 import { register } from '../../services/actions/user';
 import { useForm } from '../../hooks/useForm';
 
 function Register() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { auth } = useSelector(store => store.user);
-    const { values, handleChange } = useForm({ email: '', password: '', name: '' });
+    const { auth } = useSelector((store: any) => store.user);
+    type TUser = {
+        email: string;
+        name: string;
+        password?: string | undefined;
+    }
+    const { values, handleChange } = useForm<TUser>({ email: '', password: '', name: '' });
 
     useEffect(() => {
         if (auth) {
@@ -18,8 +23,9 @@ function Register() {
         }
     }, [auth, navigate]);
 
-    const onRegister = (e) => {
+    const onRegister = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        // @ts-ignore
         dispatch(register(values));
         navigate('/');
     };
@@ -53,7 +59,7 @@ function Register() {
                         type="password"
                         placeholder="Пароль"
                         onChange={handleChange}
-                        value={values.password}
+                        value={values.password!}
                         icon='HideIcon'
                         name="password"
                         error={false}

@@ -8,7 +8,7 @@ const initialState = {
     error: false,
 }
 
-export const userReducer = (state = initialState, action) => {
+export const userReducer = (state = initialState, action: any) => {
     switch (action.type) {
         case CREATE_USER_REQUEST:
             return {

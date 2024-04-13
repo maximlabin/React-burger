@@ -6,8 +6,9 @@ import { useDispatch } from 'react-redux';
 function ProfileNav() {
     const dispatch = useDispatch();
 
-    const onLogout = (e) => {
+    const onLogout = (e: React.SyntheticEvent) => {
         e.preventDefault();
+        // @ts-ignore
         dispatch(logout());
     };
 

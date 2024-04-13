@@ -1,12 +1,12 @@
 import React from "react";
 import styles from "./burger-ingridient-item.module.css";
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from 'prop-types';
 import { useDrag } from "react-dnd";
 import { useSelector } from "react-redux";
 import { getCount } from "../../routes";
 import { useLocation, Link } from "react-router-dom";
-function BurgerIngredientItem({ data }) {
+import { TIngredientItem } from "../../services/types/data";
+function BurgerIngredientItem({ data }: { data: TIngredientItem }) {
     const count = useSelector(getCount(data));
     const location = useLocation();
 
@@ -43,14 +43,5 @@ function BurgerIngredientItem({ data }) {
 
     );
 }
-
-BurgerIngredientItem.propTypes = {
-    data: PropTypes.shape({
-        _id: PropTypes.string.isRequired,
-        image: PropTypes.string.isRequired,
-        price: PropTypes.number.isRequired,
-        name: PropTypes.string.isRequired,
-    }).isRequired,
-};
 
 export default BurgerIngredientItem;

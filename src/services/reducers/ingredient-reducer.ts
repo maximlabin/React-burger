@@ -1,7 +1,24 @@
 import { GET_INGREDIENT_REQUEST, GET_INGREDIENT_SUCCESS, GET_INGREDIENT_ERROR } from '../actions/getIngredients';
 import { ADD_INGREDIENT, DELETE_INGREDIENT, MOVE_CARD, CLEAR_ADDED_INGREDIENTS } from '../actions/index';
+//import { TIngredientAction } '../actions/getIngredients';
+import { TIngredient, TIngredientItem } from '../types/data';
 
-const initialState = {
+interface IBun {
+    name: string;
+    type: string;
+    image: string;
+    price: number;
+}
+
+interface IIngredientState {
+    data: TIngredientItem[];
+    bun: IBun;
+    addedIngredients: TIngredient[];
+    isLoading: boolean;
+    error: string | undefined;
+}
+
+const initialState: IIngredientState = {
     data: [],
     bun: {
         name: 'Выберите булку',
@@ -12,9 +29,8 @@ const initialState = {
     addedIngredients: [],
     isLoading: true,
     error: 'undefined'
-}
-
-export const ingredientReducer = (state = initialState, action) => {
+};
+export const ingredientReducer = (state = initialState, action: any) => {
     switch (action.type) {
         case GET_INGREDIENT_REQUEST:
             return { ...state, isLoading: true }

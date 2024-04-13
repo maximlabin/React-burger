@@ -2,13 +2,12 @@ import styles from './ingridient-details.module.css';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { getData } from '../../routes';
-import PropTypes from 'prop-types';
 
-function IngredientDetails({ head }) {
+function IngredientDetails({ head }: { head: string }) {
     const { _id } = useParams();
 
     const ingredients = useSelector(getData);
-    const ingredient = ingredients.data.find(ingredient => ingredient._id === _id);
+    const ingredient = ingredients.data.find((ingredient: any) => ingredient._id === _id);
     return (
         <section className={`${styles.root}`}>
             {
@@ -29,10 +28,5 @@ function IngredientDetails({ head }) {
         </section>
     );
 }
-
-IngredientDetails.propTypes = {
-    head: PropTypes.string,
-};
-
 
 export default IngredientDetails;

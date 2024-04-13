@@ -1,11 +1,13 @@
-import { clearIngredients } from "./index.js";
-import { axiosInstance } from "../axios.js";
+import { clearIngredients } from "./index";
+import { axiosInstance } from "../axios";
+import { Dispatch } from "redux";
+import { TIngredient } from "../types/data.js";
 
 export const CREATE_ORDER_REQUEST = 'CREATE_ORDER_REQUEST';
 export const CREATE_ORDER_SUCCESS = 'CREATE_ORDER_SUCCESS';
 export const CREATE_ORDER_ERROR = 'CREATE_ORDER_ERROR';
 
-export const addOrder = (data) => (dispatch) => {
+export const addOrder = (data: TIngredient) => (dispatch: Dispatch) => {
     const fetchData = async () => {
         dispatch({ type: CREATE_ORDER_REQUEST });
         try {
@@ -23,7 +25,7 @@ export const addOrder = (data) => (dispatch) => {
                 throw new Error('Order creation failed');
             }
         } catch (error) {
-            dispatch({ type: CREATE_ORDER_ERROR, payload: error.message });
+            dispatch({ type: CREATE_ORDER_ERROR, payload: (error as Error).message });
         }
     };
 
