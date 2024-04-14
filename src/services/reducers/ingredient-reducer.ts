@@ -1,8 +1,10 @@
 import { GET_INGREDIENT_REQUEST, GET_INGREDIENT_SUCCESS, GET_INGREDIENT_ERROR } from '../actions/getIngredients';
 import { ADD_INGREDIENT, DELETE_INGREDIENT, MOVE_CARD, CLEAR_ADDED_INGREDIENTS } from '../actions/index';
-//import { TIngredientAction } '../actions/getIngredients';
+import { TIngredientAction } from '../actions/index';
+import { TIngredientResponse } from '../actions/getIngredients';
 import { TIngredient, TIngredientItem } from '../types/data';
 
+type TAction = TIngredientResponse | TIngredientAction;
 interface IBun {
     name: string;
     type: string;
@@ -30,7 +32,7 @@ const initialState: IIngredientState = {
     isLoading: true,
     error: 'undefined'
 };
-export const ingredientReducer = (state = initialState, action: any) => {
+export const ingredientReducer = (state = initialState, action: TAction) => {
     switch (action.type) {
         case GET_INGREDIENT_REQUEST:
             return { ...state, isLoading: true }

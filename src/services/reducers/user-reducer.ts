@@ -1,14 +1,20 @@
 import { CREATE_USER_REQUEST, CREATE_USER_SUCCESS, CREATE_USER_ERROR, RESET_PASSWORD } from "../actions/user";
 import { getCookie } from '../cookies';
+import { TUser } from '../actions/user';
+interface IAuthState {
+    auth: boolean;
+    resetPassword: boolean;
+    isLoading: boolean;
+    error: boolean;
+}
 
-const initialState = {
+const initialState: IAuthState = {
     auth: !!getCookie('accessToken'),
     resetPassword: false,
     isLoading: false,
     error: false,
-}
-
-export const userReducer = (state = initialState, action: any) => {
+};
+export const userReducer = (state = initialState, action: TUser) => {
     switch (action.type) {
         case CREATE_USER_REQUEST:
             return {

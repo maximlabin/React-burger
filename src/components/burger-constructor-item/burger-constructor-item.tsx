@@ -12,6 +12,7 @@ function BurgerConstructorItem({ item, index, isLocked }: IBurgerConstructorProp
     const ref = useRef(null);
     const dispatch = useDispatch();
     const deleteElement = (id: string) => {
+        // @ts-ignore
         dispatch(deleteIngredient(id));
     };
 

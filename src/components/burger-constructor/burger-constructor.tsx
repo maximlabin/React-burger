@@ -19,8 +19,8 @@ function BurgerConstructor() {
     const bun = useSelector(getBun);
     const orderNumber = useSelector(getOrderNumber);
     const [isModalOpen, setModalOpen] = useState(false);
-    // @ts-ignore
-    const onDropHandler = useCallback((item) => {
+    const onDropHandler = useCallback((item: TIngredient) => {
+        // @ts-ignore
         dispatch(addIngredient(item));
     }, [dispatch])
     const { auth } = useSelector((store: any) => store.user);
@@ -65,6 +65,7 @@ function BurgerConstructor() {
         name: 'Выберите начинку',
         image: 'https://code.s3.yandex.net/react/code/meat-01.png',
         price: 0,
+        _id: uniqid(),
         uniqId: uniqid(),
         type: 'main',
     }

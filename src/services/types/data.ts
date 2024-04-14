@@ -1,4 +1,5 @@
 export type TIngredient = {
+    readonly _id: string;
     readonly uniqId: string;
     readonly name: string;
     readonly type: string;
@@ -50,8 +51,6 @@ export interface IModalOverlay {
     onClick: () => void;
 }
 
-export type TUser = {
-    email: string;
-    name: string;
-    password?: string
-} 
+export interface IUser extends Omit<IUserFormData, 'password'> {
+    password: string | undefined;
+}

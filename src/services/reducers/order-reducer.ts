@@ -1,4 +1,5 @@
 import { CREATE_ORDER_REQUEST, CREATE_ORDER_SUCCESS, CREATE_ORDER_ERROR } from '../actions/order';
+import { TOrder } from '../actions/order';
 
 interface OrderState {
     order: null | any;
@@ -12,7 +13,7 @@ const initialState: OrderState = {
     error: null
 };
 
-export const orderReducer = (state = initialState, action: any) => {
+export const orderReducer = (state = initialState, action: TOrder) => {
     switch (action.type) {
         case CREATE_ORDER_REQUEST:
             return {
