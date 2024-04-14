@@ -16,6 +16,7 @@ function App() {
     const navigate = useNavigate();
     const state = location.state;
     useEffect(() => {
+        // @ts-ignore
         dispatch(getIngredients());
     }, [dispatch])
     const handleCloseModal = () => {
@@ -26,14 +27,14 @@ function App() {
             <AppHeader />
             <Routes location={state?.backgroundLocation || location}>
                 <Route path="/" element={<HomePage />} />
-                <Route path="/login" element={<Login />} exact={true} />
+                <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
                 <Route path="/reset-password" element={<ResetPassword />} />
                 <Route path="/profile" element={<ProtectedRouteElement><Profile /></ProtectedRouteElement>} />
                 <Route path="profile/order" element={<ProtectedRouteElement><Profile /></ProtectedRouteElement>} />
                 <Route path="/ingredients/:_id" element={<IngredientDetails head={'Детали ингредиента'} />} />
-                <Route path="*" element={<PageNotFound exact={true} />} />
+                <Route path="*" element={<PageNotFound />} />
             </Routes>
             {state?.backgroundLocation && (
                 <Routes>

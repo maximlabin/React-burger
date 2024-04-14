@@ -1,13 +1,36 @@
-import { BASE_URL } from "../../utils/apiConfig.js";
+import { BASE_URL } from "../../utils/apiConfig";
 import { setCookie, getCookie, deleteCookie } from '../cookies';
-import { axiosInstance } from "../axios.js";
+import { axiosInstance } from "../axios";
+import { Dispatch } from "redux";
+import { IUser, IUserFormData } from '../types/data';
+import { NavigateFunction } from 'react-router-dom';
 
-export const CREATE_USER_REQUEST = 'CREATE_USER_REQUEST';
-export const CREATE_USER_SUCCESS = 'CREATE_USER_SUCCESS';
-export const CREATE_USER_ERROR = 'CREATE_USER_ERROR';
-export const RESET_PASSWORD = 'RESET_PASSWORD';
+export const CREATE_USER_REQUEST: 'CREATE_USER_REQUEST' = 'CREATE_USER_REQUEST';
+export const CREATE_USER_SUCCESS: 'CREATE_USER_SUCCESS' = 'CREATE_USER_SUCCESS';
+export const CREATE_USER_ERROR: 'CREATE_USER_ERROR' = 'CREATE_USER_ERROR';
+export const RESET_PASSWORD: 'RESET_PASSWORD' = 'RESET_PASSWORD';
 
-export const forgotPassword = (email, navigate) => (dispatch) => {
+export interface ICreateUserRequest {
+    readonly type: typeof CREATE_USER_REQUEST;
+}
+
+export interface ICreateUserSuccess {
+    readonly type: typeof CREATE_USER_SUCCESS;
+    readonly auth: boolean;
+}
+
+export interface ICreateUserError {
+    readonly type: typeof CREATE_USER_ERROR;
+    readonly payload: string;
+}
+
+export interface IResetPassword {
+    readonly type: typeof RESET_PASSWORD;
+}
+
+export type TUser = ICreateUserError | IResetPassword | ICreateUserRequest | ICreateUserSuccess;
+
+export const forgotPassword = (email: string, navigate: NavigateFunction) => (dispatch: Dispatch) => {
     const fetchData = async () => {
         dispatch({ type: CREATE_USER_REQUEST });
         try {
@@ -31,7 +54,7 @@ export const forgotPassword = (email, navigate) => (dispatch) => {
     return fetchData();
 }
 
-export const resetPassword = (userData, navigate) => (dispatch) => {
+export const resetPassword = (userData: { password: string, code: string }, navigate: NavigateFunction) => (dispatch: Dispatch) => {
     const fetchData = async () => {
         dispatch({ type: CREATE_USER_REQUEST });
         try {
@@ -55,7 +78,7 @@ export const resetPassword = (userData, navigate) => (dispatch) => {
     return fetchData();
 }
 
-export const login = (data) => (dispatch) => {
+export const login = (data: { email: string, password: string }) => (dispatch: Dispatch) => {
     const fetchData = async () => {
         dispatch({ type: CREATE_USER_REQUEST });
         try {
@@ -82,7 +105,7 @@ export const login = (data) => (dispatch) => {
     return fetchData();
 }
 
-export const register = (data) => (dispatch) => {
+export const register = (data: IUserFormData) => (dispatch: Dispatch) => {
     const fetchData = async () => {
         dispatch({ type: CREATE_USER_REQUEST });
         try {
@@ -110,7 +133,7 @@ export const register = (data) => (dispatch) => {
     return fetchData();
 }
 
-export const logout = () => (dispatch) => {
+export const logout = () => (dispatch: Dispatch) => {
     const fetchData = async () => {
         dispatch({ type: CREATE_USER_REQUEST });
         try {
@@ -134,8 +157,9 @@ export const logout = () => (dispatch) => {
     return fetchData();
 }
 
-export const getUser = (userData, setUserData) => (dispatch) => {
+export const getUser = (userData: IUser, setUserData: any) => (dispatch: Dispatch) => {
     if (!getCookie('accessToken')) {
+        // @ts-ignore
         dispatch(getNewToken());
     }
     const fetchData = async () => {
@@ -161,8 +185,9 @@ export const getUser = (userData, setUserData) => (dispatch) => {
     return fetchData();
 }
 
-export const updateUser = (userData) => (dispatch) => {
+export const updateUser = (userData: IUser) => (dispatch: Dispatch) => {
     if (!getCookie('accessToken')) {
+        // @ts-ignore
         dispatch(getNewToken());
     }
     const fetchData = async () => {
@@ -191,7 +216,7 @@ export const updateUser = (userData) => (dispatch) => {
     return fetchData();
 }
 
-export const getNewToken = () => (dispatch) => {
+export const getNewToken = () => (dispatch: Dispatch) => {
     const fetchData = async () => {
         dispatch({ type: CREATE_USER_REQUEST });
         try {

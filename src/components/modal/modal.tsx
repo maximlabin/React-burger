@@ -2,14 +2,15 @@ import { useEffect } from 'react';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import styles from './modal.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
+import { PropsWithChildren } from 'react';
+import { IModal } from '../../services/types/data';
 
-function Modal({ onClick, children }) {
+function Modal({ onClick, children }: PropsWithChildren<IModal>) {
     const modalOverlay = document.getElementById("modal");
 
     useEffect(() => {
-        const handleKeyPress = (event) => {
+        const handleKeyPress = (event: KeyboardEvent) => {
             if (event.key === 'Escape') {
                 onClick();
             }
@@ -40,9 +41,5 @@ function Modal({ onClick, children }) {
         return null;
     }
 }
-Modal.propTypes = {
-    children: PropTypes.element.isRequired,
-    onClick: PropTypes.func.isRequired,
-};
 
 export default Modal;

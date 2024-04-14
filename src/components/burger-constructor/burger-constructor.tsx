@@ -11,6 +11,7 @@ import { addOrder } from "../../services/actions/order";
 import { getIngredients, getOrderNumber, getBun } from "../../routes";
 import { useNavigate } from "react-router-dom";
 import uniqid from 'uniqid';
+import { TIngredient } from '../../services/types/data';
 
 function BurgerConstructor() {
     const dispatch = useDispatch();
@@ -18,15 +19,16 @@ function BurgerConstructor() {
     const bun = useSelector(getBun);
     const orderNumber = useSelector(getOrderNumber);
     const [isModalOpen, setModalOpen] = useState(false);
-    const onDropHandler = useCallback((item) => {
+    const onDropHandler = useCallback((item: TIngredient) => {
+        // @ts-ignore
         dispatch(addIngredient(item));
     }, [dispatch])
-    const { auth } = useSelector(store => store.user);
+    const { auth } = useSelector((store: any) => store.user);
     const navigate = useNavigate();
 
     const [{ isOver }, dropRef] = useDrop({
         accept: "ingredient",
-        drop(item) {
+        drop(item: TIngredient) {
             onDropHandler(item);
         },
         collect: (monitor) => ({
@@ -36,7 +38,7 @@ function BurgerConstructor() {
 
     const [{ isOverBun }, dropRefTopBun] = useDrop({
         accept: "bun",
-        drop(item) {
+        drop(item: TIngredient) {
             onDropHandler(item);
         },
         collect: (monitor) => ({
@@ -46,7 +48,7 @@ function BurgerConstructor() {
 
     const [{ isOverBottomBun }, dropRefBottomBun] = useDrop({
         accept: "bun",
-        drop(item) {
+        drop(item: TIngredient) {
             onDropHandler(item);
         },
         collect: (monitor) => ({
@@ -54,11 +56,18 @@ function BurgerConstructor() {
         })
     });
 
+    interface IIngregient extends TIngredient {
+        isLocked?: boolean;
+        index: number;
+    }
+
     const item = {
         name: 'Выберите начинку',
         image: 'https://code.s3.yandex.net/react/code/meat-01.png',
         price: 0,
+        _id: uniqid(),
         uniqId: uniqid(),
+        type: 'main',
     }
 
     const totalPrice = useMemo(() => {
@@ -73,6 +82,7 @@ function BurgerConstructor() {
         if (!auth) {
             navigate('/login');
         } else {
+            // @ts-ignore
             dispatch(addOrder([bun, bun, ...data]));
             setModalOpen(true);
         }
@@ -102,7 +112,7 @@ function BurgerConstructor() {
                         )}
                     </div>
                     <div className={styles.scrollable} ref={dropRef} style={{ borderColor }}>
-                        {data && data.length >= 1 ? data.map((item, index) => (
+                        {data && data.length >= 1 ? data.map((item: IIngregient, index: number) => (
                             <div className={`${styles.scrollable_item} mr-2`} key={item.uniqId}>
                                 <BurgerConstructorItem item={item} index={index} isLocked={false} />
                             </div>

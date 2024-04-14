@@ -3,6 +3,7 @@ import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-component
 import { useState, useEffect } from 'react';
 import { getUser, updateUser } from '../../services/actions/user';
 import { useDispatch } from 'react-redux';
+import { IUserFormData } from '../../services/types/data';
 
 function ProfileForm() {
     const dispatch = useDispatch();
@@ -14,10 +15,11 @@ function ProfileForm() {
         }
     )
     useEffect(() => {
+        // @ts-ignore
         dispatch(getUser(userData, setUserData));
     }, []);
 
-    const onChangeFormData = (e, field) => {
+    const onChangeFormData = (e: React.ChangeEvent<HTMLInputElement>, field: keyof IUserFormData) => {
         if (field === 'name') {
             setUserData({ ...userData, name: e.target.value });
         } else if (field === 'email') {
@@ -26,12 +28,14 @@ function ProfileForm() {
             setUserData({ ...userData, password: e.target.value });
         }
     }
-    const onSave = (e) => {
+    const onSave = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        // @ts-ignore
         dispatch(updateUser(userData, setUserData));
     }
-    const onCancel = (e) => {
+    const onCancel = (e: React.SyntheticEvent<Element, Event>) => {
         e.preventDefault();
+        // @ts-ignore
         dispatch(getUser(userData, setUserData));
     }
 

@@ -1,8 +1,7 @@
 import styles from './order-details.module.css';
 import icon from '../../images/done.svg';
-import PropTypes from 'prop-types';
 
-function OrderDetails({ _id }) {
+function OrderDetails({ _id }: { _id: string }) {
     return (
         <section className={`${styles.main}`}>
             <h1 className={`${styles.order} text_type_digits-large mt-20 mb-8`}>{_id}</h1>
@@ -12,10 +11,6 @@ function OrderDetails({ _id }) {
             <p className={`text text_type_main-default text_color_inactive mb-30`}>Дождитесь готовности на орбитальной станции</p>
         </section>
     );
-}
-
-OrderDetails.propTypes = {
-    _id: PropTypes.number.isRequired,
 }
 
 export default OrderDetails;

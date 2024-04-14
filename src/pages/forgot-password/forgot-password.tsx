@@ -1,57 +1,49 @@
-import styles from './reset-password.module.css';
+import styles from './forgot-password.module.css';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { resetPassword } from '../../services/actions/user';
+import { useDispatch, useSelector } from 'react-redux';
+import { forgotPassword } from '../../services/actions/user';
 import { useForm } from '../../hooks/useForm';
 
-function ResetPassword() {
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const { auth } = useSelector(store => store.user);
-    const check = useSelector(store => store.user.resetPassword);
-    const { values, handleChange } = useForm({ password: '', code: '' });
+interface IUserFormData {
+    email: string;
+}
 
-    const onResetPassword = (e) => {
+function ForgotPassword() {
+    const { auth } = useSelector((store: any) => store.user);
+    const { values, handleChange } = useForm<IUserFormData>({ email: '' });
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const sendEmail = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        dispatch(resetPassword(values, navigate));
+        // @ts-ignore
+        dispatch(forgotPassword(values.email, navigate));
     }
 
     useEffect(() => {
         if (auth) {
             navigate('/');
         }
-        if (!check) {
-            navigate("/forgot-password");
-        }
-    }, [auth, navigate, check]);
+    }, [auth, navigate]);
 
     return (
         <div className={styles.root}>
             <div className={styles.main}>
                 <h1 className='text text_type_main-medium mb-8'>Восстановление пароля</h1>
-                <form onSubmit={onResetPassword} className={styles.form}>
-                    <Input
-                        type={'password'}
-                        placeholder={'Введите новый пароль'}
-                        onChange={handleChange}
-                        value={values.password}
-                        name={'password'}
-                        error={false}
-                        errorText={'Ошибка'}
-                        size={'default'} />
+                <form onSubmit={(e) => sendEmail(e)} className={styles.form}>
                     <Input
                         type={'text'}
-                        placeholder={'Введите код из письма'}
+                        placeholder={'Укажите e-mail'}
                         onChange={handleChange}
-                        value={values.code}
-                        name={'code'}
+                        value={values.email}
+                        name={'e-mail'}
                         error={false}
                         errorText={'Ошибка'}
                         size={'default'} />
                     <Button type='primary' size='medium' htmlType='submit'>
-                        Сохранить
+                        Восстановить
                     </Button>
                 </form>
                 <div className={`${styles.login} mt-15`}>
@@ -65,4 +57,5 @@ function ResetPassword() {
         </div>
     );
 }
-export default ResetPassword;
+
+export default ForgotPassword;

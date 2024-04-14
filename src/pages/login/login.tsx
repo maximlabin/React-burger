@@ -1,7 +1,7 @@
 import styles from './login.module.css';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { FormEvent, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../services/actions/user';
 import { useForm } from '../../hooks/useForm';
@@ -9,7 +9,7 @@ import { useForm } from '../../hooks/useForm';
 function Login() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { auth } = useSelector(store => store.user);
+    const { auth } = useSelector((store: any) => store.user);
     const { values, handleChange } = useForm({ email: '', password: '' });
 
     useEffect(() => {
@@ -18,8 +18,9 @@ function Login() {
         }
     }, [auth, navigate]);
 
-    const onLogin = e => {
+    const onLogin = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        // @ts-ignore
         dispatch(login(values));
     }
 

@@ -4,12 +4,15 @@ import styles from './burger-constructor-item.module.css';
 import { useDrag, useDrop } from 'react-dnd';
 import { useDispatch } from 'react-redux';
 import { deleteIngredient, moveCard } from '../../services/actions';
-import PropTypes from 'prop-types';
+import { TIngredient } from '../../services/types/data';
+import { IBurgerConstructorProps } from '../../services/types/data';
 
-function BurgerConstructorItem({ item, index, isLocked }) {
+
+function BurgerConstructorItem({ item, index, isLocked }: IBurgerConstructorProps) {
     const ref = useRef(null);
     const dispatch = useDispatch();
-    const deleteElement = (id) => {
+    const deleteElement = (id: string) => {
+        // @ts-ignore
         dispatch(deleteIngredient(id));
     };
 
@@ -21,7 +24,7 @@ function BurgerConstructorItem({ item, index, isLocked }) {
         }),
     });
 
-    const [, drop] = useDrop({
+    const [, drop] = useDrop<TIngredient, void, { handlerId: string }>({
         accept: 'item',
         hover(hoverItem, monitor) {
             if (!ref.current) {
@@ -29,15 +32,20 @@ function BurgerConstructorItem({ item, index, isLocked }) {
             }
 
             const dragIndex = hoverItem.index;
+
+            if (dragIndex === undefined) {
+                return;
+            }
+
             const hoverIndex = index;
 
 
             if (dragIndex === hoverIndex) {
                 return;
             }
-            const hoverBoundingRect = ref.current.getBoundingClientRect();
+            const hoverBoundingRect = (ref.current as HTMLElement).getBoundingClientRect();
             const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-            const clientOffset = monitor.getClientOffset();
+            const clientOffset = monitor.getClientOffset() as DOMRect;
             const hoverClientY = clientOffset.y - hoverBoundingRect.top;
 
             if ((dragIndex < hoverIndex && hoverClientY < hoverMiddleY) ||
@@ -66,16 +74,5 @@ function BurgerConstructorItem({ item, index, isLocked }) {
         </div>
     );
 }
-
-BurgerConstructorItem.propTypes = {
-    item: PropTypes.shape({
-        uniqId: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        price: PropTypes.number.isRequired,
-        image: PropTypes.string.isRequired,
-    }).isRequired,
-    index: PropTypes.number.isRequired,
-    isLocked: PropTypes.bool.isRequired,
-};
 
 export default BurgerConstructorItem;
