@@ -5,7 +5,6 @@ import { getData } from '../../routes';
 
 function IngredientDetails({ head }: { head: string }) {
     const { _id } = useParams();
-
     const ingredients = useSelector(getData);
     const ingredient = ingredients.data.find((ingredient: any) => ingredient._id === _id);
     return (

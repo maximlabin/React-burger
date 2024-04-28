@@ -1,5 +1,4 @@
-import { GET_INGREDIENT_REQUEST, GET_INGREDIENT_SUCCESS, GET_INGREDIENT_ERROR } from '../actions/getIngredients';
-import { ADD_INGREDIENT, DELETE_INGREDIENT, MOVE_CARD, CLEAR_ADDED_INGREDIENTS } from '../actions/index';
+import { GET_INGREDIENT_REQUEST, GET_INGREDIENT_SUCCESS, GET_INGREDIENT_ERROR, ADD_INGREDIENT, DELETE_INGREDIENT, MOVE_CARD, CLEAR_ADDED_INGREDIENTS } from '../constants';
 import { TIngredientAction } from '../actions/index';
 import { TIngredientResponse } from '../actions/getIngredients';
 import { TIngredient, TIngredientItem } from '../types/data';

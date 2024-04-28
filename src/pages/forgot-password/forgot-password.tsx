@@ -1,10 +1,11 @@
 import styles from './forgot-password.module.css';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, FormEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { forgotPassword } from '../../services/actions/user';
 import { useForm } from '../../hooks/useForm';
+import { useAppDispatch } from '../../hooks/useDispatch';
 
 interface IUserFormData {
     email: string;
@@ -12,13 +13,12 @@ interface IUserFormData {
 
 function ForgotPassword() {
     const { auth } = useSelector((store: any) => store.user);
-    const { values, handleChange } = useForm<IUserFormData>({ email: '' });
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
+    const { values, handleChange } = useForm<IUserFormData>({ email: '' });
 
-    const sendEmail = (e: React.FormEvent<HTMLFormElement>) => {
+    const sendEmail = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        // @ts-ignore
         dispatch(forgotPassword(values.email, navigate));
     }
 
@@ -38,7 +38,7 @@ function ForgotPassword() {
                         placeholder={'Укажите e-mail'}
                         onChange={handleChange}
                         value={values.email}
-                        name={'e-mail'}
+                        name={'email'}
                         error={false}
                         errorText={'Ошибка'}
                         size={'default'} />

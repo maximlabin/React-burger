@@ -1,4 +1,4 @@
-import { CREATE_ORDER_REQUEST, CREATE_ORDER_SUCCESS, CREATE_ORDER_ERROR } from '../actions/order';
+import { CREATE_ORDER_REQUEST, CREATE_ORDER_SUCCESS, CREATE_ORDER_ERROR } from '../constants';
 import { TOrder } from '../actions/order';
 
 interface OrderState {

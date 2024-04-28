@@ -5,22 +5,22 @@ import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import { useDrop } from "react-dnd";
 import BurgerConstructorItem from '../burger-constructor-item/burger-constructor-item';
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { addIngredient } from "../../services/actions";
 import { addOrder } from "../../services/actions/order";
 import { getIngredients, getOrderNumber, getBun } from "../../routes";
 import { useNavigate } from "react-router-dom";
 import uniqid from 'uniqid';
 import { TIngredient } from '../../services/types/data';
+import { useAppDispatch } from "../../hooks/useDispatch";
 
 function BurgerConstructor() {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const data = useSelector(getIngredients);
     const bun = useSelector(getBun);
     const orderNumber = useSelector(getOrderNumber);
     const [isModalOpen, setModalOpen] = useState(false);
     const onDropHandler = useCallback((item: TIngredient) => {
-        // @ts-ignore
         dispatch(addIngredient(item));
     }, [dispatch])
     const { auth } = useSelector((store: any) => store.user);
@@ -82,8 +82,8 @@ function BurgerConstructor() {
         if (!auth) {
             navigate('/login');
         } else {
-            // @ts-ignore
-            dispatch(addOrder([bun, bun, ...data]));
+            const orderData = [bun, bun, ...data]
+            dispatch(addOrder(orderData));
             setModalOpen(true);
         }
     };

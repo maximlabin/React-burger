@@ -2,17 +2,15 @@ import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burg
 import { useRef } from 'react';
 import styles from './burger-constructor-item.module.css';
 import { useDrag, useDrop } from 'react-dnd';
-import { useDispatch } from 'react-redux';
 import { deleteIngredient, moveCard } from '../../services/actions';
 import { TIngredient } from '../../services/types/data';
 import { IBurgerConstructorProps } from '../../services/types/data';
-
+import { useAppDispatch } from '../../hooks/useDispatch';
 
 function BurgerConstructorItem({ item, index, isLocked }: IBurgerConstructorProps) {
     const ref = useRef(null);
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const deleteElement = (id: string) => {
-        // @ts-ignore
         dispatch(deleteIngredient(id));
     };
 

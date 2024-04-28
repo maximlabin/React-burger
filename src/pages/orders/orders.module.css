@@ -1,0 +1,12 @@
+.root {
+    max-width: 1240px;
+    height: 100vh;
+    display: flex;
+    justify-content: start;
+    margin: 0 auto;
+}
+
+.orders {
+    margin-left: 60px;
+    width: 760px;
+}

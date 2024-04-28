@@ -1,0 +1,50 @@
+.main {
+    margin: 10px;
+    position: relative;
+    width: 100%;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.item {
+    min-width: 584px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    color: var(--text-primary-color);
+    list-style: none;
+    text-decoration: none;
+    gap: 24px;
+    border-radius: 20px;
+    background-color: var(--background);
+}
+
+
+.order_price {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    min-width: 536px;
+}
+
+.title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    min-width: 536px;
+}
+
+.ingredient {
+    text-align: start;
+}
+
+.price {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}

@@ -1,4 +1,4 @@
-import { SET_SELECTED_INGREDIENT, CLEAR_SELECTED_INGREDIENT } from '../actions/modal';
+import { SET_SELECTED_INGREDIENT, CLEAR_SELECTED_INGREDIENT } from '../constants';
 import { TIngredientItem } from '../types/data';
 import { TModalAction } from '../actions/modal';
 

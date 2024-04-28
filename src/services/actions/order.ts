@@ -1,11 +1,13 @@
 import { clearIngredients } from "./index";
 import { axiosInstance } from "../axios";
-import { Dispatch } from "redux";
 import { TIngredient } from "../types/data.js";
 
-export const CREATE_ORDER_REQUEST: 'CREATE_ORDER_REQUEST' = 'CREATE_ORDER_REQUEST';
-export const CREATE_ORDER_SUCCESS: 'CREATE_ORDER_SUCCESS' = 'CREATE_ORDER_SUCCESS';
-export const CREATE_ORDER_ERROR: 'CREATE_ORDER_ERROR' = 'CREATE_ORDER_ERROR';
+import {
+    CREATE_ORDER_REQUEST,
+    CREATE_ORDER_SUCCESS,
+    CREATE_ORDER_ERROR,
+} from "../constants";
+import { appDispatch } from "../types";
 
 export interface ICreateOrderRequest {
     readonly type: typeof CREATE_ORDER_REQUEST;
@@ -22,7 +24,7 @@ export interface ICreateOrderError {
 }
 
 export type TOrder = ICreateOrderError | ICreateOrderRequest | ICreateOrderSuccess;
-export const addOrder = (data: TIngredient) => (dispatch: Dispatch) => {
+export const addOrder = (data: Array<TIngredient>) => (dispatch: appDispatch) => {
     const fetchData = async () => {
         dispatch({ type: CREATE_ORDER_REQUEST });
         try {
@@ -34,7 +36,6 @@ export const addOrder = (data: TIngredient) => (dispatch: Dispatch) => {
 
             if (responseData.success) {
                 dispatch({ type: CREATE_ORDER_SUCCESS, payload: responseData });
-                //@ts-ignore
                 dispatch(clearIngredients())
                 return responseData;
             } else {

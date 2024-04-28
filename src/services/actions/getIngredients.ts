@@ -1,10 +1,12 @@
-import { Dispatch } from "redux";
+import { appDispatch } from "../../services/types";
 import { axiosInstance } from "../../services/axios";
 import { TIngredientItem } from "../../services/types/data";
 
-export const GET_INGREDIENT_REQUEST: 'GET_INGREDIENT_REQUEST' = 'GET_INGREDIENT_REQUEST';
-export const GET_INGREDIENT_SUCCESS: 'GET_INGREDIENT_SUCCESS' = 'GET_INGREDIENT_SUCCESS';
-export const GET_INGREDIENT_ERROR: 'GET_INGREDIENT_ERROR' = 'GET_INGREDIENT_ERROR';
+import {
+    GET_INGREDIENT_REQUEST,
+    GET_INGREDIENT_SUCCESS,
+    GET_INGREDIENT_ERROR
+} from "../constants";
 
 
 export interface IGetIngredientRequest {
@@ -18,12 +20,12 @@ export interface IGetIngredientSuccess {
 
 export interface IGetIngredientError {
     readonly type: typeof GET_INGREDIENT_ERROR;
-    readonly payload: string;
+    readonly payload: unknown;
 }
 
 export type TIngredientResponse = IGetIngredientRequest | IGetIngredientSuccess | IGetIngredientError;
 
-export const getIngredients = () => (dispatch: Dispatch) => {
+export const getIngredients = () => (dispatch: appDispatch) => {
     const fetchData = async () => {
         dispatch({ type: GET_INGREDIENT_REQUEST });
         try {
