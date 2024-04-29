@@ -42,6 +42,13 @@ export type TOrder = {
     updateAt: string;
 }
 
+export interface IOrdersResponse {
+    orders: TOrder[];
+    success: boolean;
+    total: number;
+    totalToday: number;
+}
+
 export interface IUserFormData {
     name: string;
     email: string;

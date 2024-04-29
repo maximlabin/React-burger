@@ -1,5 +1,6 @@
 import { Middleware } from "redux";
-import { RootState } from "../services/types";
+import { getCookie } from "./cookies";
+import { IOrdersResponse } from "./types/data";
 
 export type WsActions = {
     WS_CONNECTION_START: string,
@@ -9,10 +10,9 @@ export type WsActions = {
     WS_GET_MESSAGE: string
 };
 
-export const wsMiddleware = (wsUrl: string, wsActions: WsActions, { checkToken }: { checkToken?: boolean }): Middleware => {
+export const wsMiddleware = (wsUrl: string, actions: WsActions, { checkToken }: { checkToken?: boolean }): Middleware => {
     return (store) => {
         let socket: WebSocket | null = null;
-        let url: string | null = null;
         let closing: boolean = false;
         const {
             WS_CONNECTION_START,
@@ -20,14 +20,26 @@ export const wsMiddleware = (wsUrl: string, wsActions: WsActions, { checkToken }
             WS_CONNECTION_CLOSED,
             WS_CONNECTION_ERROR,
             WS_GET_MESSAGE
-        } = wsActions;
+        } = actions;
 
         return (next) => (action) => {
             const { dispatch } = store;
-            const { type } = action;
+            type ActionType = {
+                type: string,
+            };
+            type ActionOrders = {
+                orders: IOrdersResponse[],
+            }
+            const { type } = action as ActionType;
+            const { orders } = action as ActionOrders;
+            const token = getCookie('accessToken');
 
             if (type === WS_CONNECTION_START) {
-                socket = new WebSocket("wss://norma.nomoreparties.space/orders/all");
+                if (checkToken && token) {
+                    socket = new WebSocket(`${wsUrl}?token=${token.slice(7)}`);
+                } else {
+                    socket = new WebSocket(wsUrl);
+                }
                 socket.onopen = (event) => {
                     dispatch({ type: WS_CONNECTION_SUCCESS });
                 };
@@ -39,7 +51,6 @@ export const wsMiddleware = (wsUrl: string, wsActions: WsActions, { checkToken }
                 socket.onmessage = (event) => {
                     const { data } = event;
                     const parsedData = JSON.parse(data);
-                    console.log(parsedData)
                     dispatch({
                         type: WS_GET_MESSAGE,
                         orders: parsedData
@@ -61,7 +72,9 @@ export const wsMiddleware = (wsUrl: string, wsActions: WsActions, { checkToken }
             }
 
             if (WS_GET_MESSAGE && type === WS_GET_MESSAGE && socket) {
-                //socket.send(JSON.stringify(order));
+                if (type === WS_GET_MESSAGE && socket && socket.readyState === WebSocket.OPEN) {
+                    socket.send(JSON.stringify(orders));
+                }
             }
 
             next(action);

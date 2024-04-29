@@ -1,6 +1,6 @@
 import { WS_USER_CONNECTION_SUCCESS, WS_USER_CONNECTION_CLOSED, WS_USER_CONNECTION_ERROR, WS_USER_CONNECTION_START, WS_USER_GET_MESSAGE } from "../constants";
 
-import { TOrder } from "../types/data";
+import { IOrdersResponse } from "../types/data";
 
 export interface ICreateConactionError {
     readonly type: typeof WS_USER_CONNECTION_ERROR;
@@ -20,7 +20,7 @@ export interface ICreateConactionClosed {
 
 export interface ICreateConactionMessage {
     readonly type: typeof WS_USER_GET_MESSAGE;
-    readonly orders: TOrder[];
+    readonly orders: IOrdersResponse;
 }
 
 export type TWSActions = ICreateConactionError | ICreateConactionSuccess | ICreateConactionStart | ICreateConactionClosed | ICreateConactionMessage;

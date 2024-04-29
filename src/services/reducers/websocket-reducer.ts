@@ -1,16 +1,21 @@
 import { TWSActions } from "../actions/ws";
 import { WS_CONNECTION_SUCCESS, WS_CONNECTION_CLOSED, WS_CONNECTION_ERROR, WS_CONNECTION_START, WS_GET_MESSAGE } from "../constants";
 
-import { TOrder } from "../types/data";
+import { IOrdersResponse } from "../types/data";
 
 type TWSState = {
     wsConnected: boolean;
-    orders: Array<TOrder>;
+    orders: IOrdersResponse;
 }
 
 const initialState: TWSState = {
     wsConnected: false,
-    orders: []
+    orders: {
+        orders: [],
+        success: false,
+        total: 0,
+        totalToday: 0
+    }
 }
 
 export const wsReducer = (state = initialState, action: TWSActions) => {
