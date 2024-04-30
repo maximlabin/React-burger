@@ -7,7 +7,9 @@ import {
     CREATE_ORDER_SUCCESS,
     CREATE_ORDER_ERROR,
 } from "../constants";
-import { appDispatch } from "../types";
+import { AppDispatch } from "../types";
+import { getCookie } from "../cookies";
+import { getNewToken } from "./user";
 
 export interface ICreateOrderRequest {
     readonly type: typeof CREATE_ORDER_REQUEST;
@@ -24,12 +26,20 @@ export interface ICreateOrderError {
 }
 
 export type TOrder = ICreateOrderError | ICreateOrderRequest | ICreateOrderSuccess;
-export const addOrder = (data: Array<TIngredient>) => (dispatch: appDispatch) => {
+export const addOrder = (data: Array<TIngredient>) => (dispatch: AppDispatch) => {
+    if (!getCookie('accessToken')) {
+        dispatch(getNewToken());
+    }
     const fetchData = async () => {
         dispatch({ type: CREATE_ORDER_REQUEST });
+        const token = getCookie('accessToken');
         try {
             const response = await axiosInstance.post(`/orders`, {
                 ingredients: data,
+            }, {
+                headers: {
+                    "authorization": token,
+                },
             });
 
             const responseData = response.data;

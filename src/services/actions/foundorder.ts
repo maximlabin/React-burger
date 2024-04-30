@@ -1,4 +1,4 @@
-import { appDispatch } from "../types";
+import { AppDispatch } from "../types";
 import { axiosInstance } from "../axios";
 import { WS_USER_URL } from "../../utils/apiConfig";
 import { GET_FOUND_ORDER_ERROR, GET_FOUND_ORDER_REQUEST, GET_FOUND_ORDER_SUCCESS } from "../constants";
@@ -22,7 +22,7 @@ export interface IGetFoundOrderError {
 
 export type TFoundOrderResponse = IGetFoundOrderError | IGetFoundOrderRequest | IGetFoundOrderSuccess;
 
-export const getFoundOrder = (order: string) => (dispatch: appDispatch) => {
+export const getFoundOrder = (order: string) => (dispatch: AppDispatch) => {
     const fetchData = async () => {
         dispatch({ type: GET_FOUND_ORDER_REQUEST });
         try {

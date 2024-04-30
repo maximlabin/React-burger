@@ -2,11 +2,12 @@ import styles from './ingridient-details.module.css';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { getData } from '../../routes';
+import { TIngredientItem } from '../../services/types/data';
 
 function IngredientDetails({ head }: { head: string }) {
     const { _id } = useParams();
-    const ingredients = useSelector(getData);
-    const ingredient = ingredients.data.find((ingredient: any) => ingredient._id === _id);
+    const ingredients = useSelector(getData) as { data: TIngredientItem[] };
+    const ingredient = ingredients.data.find((ingredient: { _id: string }) => ingredient._id === _id);
     return (
         <section className={`${styles.root}`}>
             {

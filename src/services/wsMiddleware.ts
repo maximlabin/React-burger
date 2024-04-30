@@ -64,6 +64,7 @@ export const wsMiddleware = (wsUrl: string, actions: WsActions, { checkToken }: 
                         dispatch({ type: WS_CONNECTION_START });
                     }
                 };
+
             }
 
             if (WS_CONNECTION_CLOSED && type === WS_CONNECTION_CLOSED && socket) {
@@ -71,10 +72,9 @@ export const wsMiddleware = (wsUrl: string, actions: WsActions, { checkToken }: 
                 socket.close();
             }
 
-            if (WS_GET_MESSAGE && type === WS_GET_MESSAGE && socket) {
-                if (type === WS_GET_MESSAGE && socket && socket.readyState === WebSocket.OPEN) {
-                    socket.send(JSON.stringify(orders));
-                }
+            if (type === WS_GET_MESSAGE && socket && socket.readyState === WebSocket.OPEN) {
+                console.log('send');
+                socket.send(JSON.stringify(orders));
             }
 
             next(action);

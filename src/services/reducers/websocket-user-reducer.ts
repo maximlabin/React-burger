@@ -1,4 +1,4 @@
-import { TWSActions } from "../actions/ws-user";
+import { TWSActionsUser } from "../actions/ws-user";
 import { WS_USER_CONNECTION_SUCCESS, WS_USER_CONNECTION_CLOSED, WS_USER_CONNECTION_ERROR, WS_USER_CONNECTION_START, WS_USER_GET_MESSAGE } from "../constants";
 
 import { IOrdersResponse } from "../types/data";
@@ -18,7 +18,7 @@ const initialState: TWSUserState = {
     }
 }
 
-export const wsUserReducer = (state = initialState, action: TWSActions) => {
+export const wsUserReducer = (state = initialState, action: TWSActionsUser) => {
     switch (action.type) {
         case WS_USER_CONNECTION_SUCCESS:
             return {

@@ -17,4 +17,4 @@ type TApplicationActions =
 
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, TApplicationActions>;
 
-export type appDispatch = typeof store.dispatch
+export type AppDispatch = typeof store.dispatch

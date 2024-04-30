@@ -4,7 +4,7 @@ import { axiosInstance } from "../axios";
 import { Dispatch } from "redux";
 import { IUserFormData } from '../types/data';
 import { NavigateFunction } from 'react-router-dom';
-import { appDispatch } from "../types";
+import { AppDispatch } from "../types";
 
 import {
     CREATE_USER_REQUEST,
@@ -160,7 +160,7 @@ export const logout = () => (dispatch: Dispatch) => {
     return fetchData();
 }
 
-export const getUser = (userData: IUserFormData, setUserData: any) => (dispatch: appDispatch) => {
+export const getUser = (userData: IUserFormData, setUserData: any) => (dispatch: AppDispatch) => {
     if (!getCookie('accessToken')) {
         dispatch(getNewToken());
     }
@@ -187,7 +187,7 @@ export const getUser = (userData: IUserFormData, setUserData: any) => (dispatch:
     return fetchData();
 }
 
-export const updateUser = (userData: IUserFormData) => (dispatch: appDispatch) => {
+export const updateUser = (userData: IUserFormData) => (dispatch: AppDispatch) => {
     if (!getCookie('accessToken')) {
         dispatch(getNewToken());
     }

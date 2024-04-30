@@ -2,7 +2,7 @@ import styles from './forgot-password.module.css';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, FormEvent } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from '../../hooks/useSelector';
 import { forgotPassword } from '../../services/actions/user';
 import { useForm } from '../../hooks/useForm';
 import { useAppDispatch } from '../../hooks/useDispatch';
@@ -12,7 +12,7 @@ interface IUserFormData {
 }
 
 function ForgotPassword() {
-    const { auth } = useSelector((store: any) => store.user);
+    const { auth } = useSelector((store) => store.user);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const { values, handleChange } = useForm<IUserFormData>({ email: '' });

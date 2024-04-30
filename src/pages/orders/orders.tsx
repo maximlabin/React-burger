@@ -1,24 +1,35 @@
 import ProfileNav from '../../components/profile-nav/profile-nav';
 import styles from './orders.module.css';
 import OrdersInfo from '../../components/orders-list/orders-list';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../services/types';
-import { WS_CONNECTION_CLOSED, WS_USER_CONNECTION_START } from '../../services/constants';
-import { useEffect } from 'react';
+
+import { WS_USER_CONNECTION_CLOSED, WS_USER_CONNECTION_START } from '../../services/constants';
+import { useEffect, useState } from 'react';
 import { useAppDispatch } from '../../hooks/useDispatch';
+import { useSelector } from '../../hooks/useSelector';
 
 
 function Orders() {
     const dispatch = useAppDispatch();
-    const orders = useSelector((state: RootState) => state.ws.orders);
+    const orders = useSelector((state) => state.wsUser.orders);
+
+    const [connectionEstablished, setConnectionEstablished] = useState(false);
     useEffect(() => {
         dispatch({ type: WS_USER_CONNECTION_START });
-    }, [dispatch]);
+        setConnectionEstablished(true);
+        return () => {
+            if (connectionEstablished) {
+                dispatch({ type: WS_USER_CONNECTION_CLOSED });
+            }
+        };
+    }, [dispatch, connectionEstablished]);
+
+    const reversedOrders = [...orders.orders].reverse();
+
     return (
         <div className={`${styles.root} pt-15`}>
             <ProfileNav />
             <div className={styles.orders}>
-                <OrdersInfo orderList={orders.orders} showStatus={true} />
+                <OrdersInfo orderList={reversedOrders} showStatus={true} />
             </div>
         </div>
     )

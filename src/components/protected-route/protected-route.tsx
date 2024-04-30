@@ -1,11 +1,10 @@
 import { useEffect } from 'react';
 import { PropsWithChildren } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../hooks/useSelector';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { RootState } from '../../services/types';
 
 function ProtectedRouteElement({ children }: PropsWithChildren) {
-    const { auth } = useSelector((store: RootState) => store.user);
+    const { auth } = useSelector((store) => store.user);
     const navigate = useNavigate();
     const location = useLocation();
 

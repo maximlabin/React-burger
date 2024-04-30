@@ -3,7 +3,7 @@ const BASE_URL = 'https://norma.nomoreparties.space/api';
 
 export const axiosInstance = axios.create({
     baseURL: BASE_URL,
-    timeout: 1000,
+    timeout: 20000,
     headers: {
         'Content-Type': 'application/json;charset=utf-8'
     }

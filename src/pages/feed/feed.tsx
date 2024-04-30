@@ -1,18 +1,26 @@
 import styles from './feed.module.css';
 import OrdersInfo from '../../components/orders-list/orders-list';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../services/types';
 import { useAppDispatch } from '../../hooks/useDispatch';
-import { WS_CONNECTION_START } from '../../services/constants';
-import { useEffect } from 'react';
+import { WS_CONNECTION_CLOSED, WS_CONNECTION_START } from '../../services/constants';
+import { useEffect, useState } from 'react';
+import { useSelector } from '../../hooks/useSelector';
 
 function Feed() {
-    const ingredients = useSelector((state: RootState) => state.ingredients);
+    const ingredients = useSelector((state) => state.ingredients);
     const dispatch = useAppDispatch();
-    const orders = useSelector((state: RootState) => state.ws.orders);
+    const orders = useSelector((state) => state.ws.orders);
+
+    const [connectionEstablished, setConnectionEstablished] = useState(false);
     useEffect(() => {
         dispatch({ type: WS_CONNECTION_START });
-    }, [dispatch]);
+        setConnectionEstablished(true);
+        return () => {
+            if (connectionEstablished) {
+                dispatch({ type: WS_CONNECTION_CLOSED });
+            }
+        }
+    }, [dispatch, connectionEstablished]);
+
     let doneOrders = orders.orders.filter(order => order.status === 'done');
     let pendingOrders = orders.orders.filter(order => order.status === 'pending');
     useEffect(() => {

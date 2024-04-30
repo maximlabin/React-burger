@@ -23,5 +23,5 @@ export interface ICreateConactionMessage {
     readonly orders: IOrdersResponse;
 }
 
-export type TWSActions = ICreateConactionError | ICreateConactionSuccess | ICreateConactionStart | ICreateConactionClosed | ICreateConactionMessage;
+export type TWSActionsUser = ICreateConactionError | ICreateConactionSuccess | ICreateConactionStart | ICreateConactionClosed | ICreateConactionMessage;
 

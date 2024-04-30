@@ -1,4 +1,4 @@
-import { appDispatch } from "../../services/types";
+import { AppDispatch } from "../../services/types";
 import { axiosInstance } from "../../services/axios";
 import { TIngredientItem } from "../../services/types/data";
 
@@ -25,7 +25,7 @@ export interface IGetIngredientError {
 
 export type TIngredientResponse = IGetIngredientRequest | IGetIngredientSuccess | IGetIngredientError;
 
-export const getIngredients = () => (dispatch: appDispatch) => {
+export const getIngredients = () => (dispatch: AppDispatch) => {
     const fetchData = async () => {
         dispatch({ type: GET_INGREDIENT_REQUEST });
         try {

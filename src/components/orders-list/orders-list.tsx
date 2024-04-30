@@ -7,7 +7,7 @@ import { TIngredientItem, TOrder } from '../../services/types/data';
 import { getData } from '../../routes'
 
 function OrdersInfo({ showStatus, orderList }: { showStatus: boolean, orderList: Array<TOrder> }) {
-    const data = useSelector(getData).data;
+    const data = useSelector(getData).data as TIngredientItem[];
     const location = useLocation();
     return (
         <div className={styles.main}>
@@ -21,7 +21,8 @@ function OrdersInfo({ showStatus, orderList }: { showStatus: boolean, orderList:
 
                     ingredient.ingredients.forEach((item) => {
                         const foundIngredient = data.find((ingredient: TIngredientItem) => ingredient._id === item);
-                        if (foundIngredient && !bunAdded) {
+                        if (!foundIngredient) return
+                        if (!bunAdded) {
                             price += foundIngredient.price || 0;
                             pictures.push(foundIngredient.image_mobile);
                             bunAdded = true;

@@ -3,9 +3,8 @@ import { useParams } from 'react-router-dom';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { WS_CONNECTION_START } from '../../services/constants';
 import { useAppDispatch } from '../../hooks/useDispatch';
-import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../services/types';
+import { useEffect, useState } from 'react';
+import { useSelector } from '../../hooks/useSelector';
 import { getData } from '../../routes';
 import dataConverter from '../../utils/dataConverter';
 import { TIngredientItem } from '../../services/types/data';
@@ -14,22 +13,32 @@ import { getFoundOrder } from '../../services/actions/foundorder';
 function InfoOrder() {
     const { number: numberString } = useParams();
     const dispatch = useAppDispatch();
+
+    const [connectionEstablished, setConnectionEstablished] = useState(false);
     useEffect(() => {
         dispatch({ type: WS_CONNECTION_START });
-    }, [dispatch]);
-    const order = useSelector((state: RootState) => state.ws.orders);
+        setConnectionEstablished(true);
+        return () => {
+            if (connectionEstablished) {
+                dispatch({ type: WS_CONNECTION_START });
+            }
+        }
+    }, [dispatch, connectionEstablished]);
+
+    const order = useSelector((state) => state.ws.orders);
     let price = 0;
     const foundOrder = order.orders.find(order => order.number as unknown as string == numberString);
     if (foundOrder !== undefined) {
         if (numberString) dispatch(getFoundOrder(numberString))
     }
-    const data = useSelector(getData).data;
+    const data = useSelector(getData).data as TIngredientItem[];
     let icons: string[] = [];
     let names: string[] = [];
     let prices: number[] = [];
     if (foundOrder) {
         foundOrder.ingredients.forEach((item) => {
             const foundIngredient = data.find((ingredient: TIngredientItem) => ingredient._id === item);
+            if (!foundIngredient) return
             price += foundIngredient.price || 0;
             icons.push(foundIngredient.image_mobile);
             names.push(foundIngredient.name);

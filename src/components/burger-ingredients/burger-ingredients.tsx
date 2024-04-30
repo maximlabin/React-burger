@@ -7,7 +7,7 @@ import { getData, isLoad } from "../../routes";
 import { TIngredientItem } from '../../services/types/data';
 
 function BurgerIngredients() {
-    const { data } = useSelector(getData);
+    const { data } = useSelector(getData) as { data: TIngredientItem[] };
     const { isLoading } = useSelector(isLoad);
     const [current, setCurrent] = useState('bun');
 
