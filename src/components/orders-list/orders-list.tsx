@@ -2,7 +2,7 @@ import styles from './orders-list.module.css';
 import dataConverter from '../../utils/dataConverter';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../hooks/useSelector';
 import { TIngredientItem, TOrder } from '../../services/types/data';
 import { getData } from '../../routes'
 

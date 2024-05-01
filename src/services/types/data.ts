@@ -49,6 +49,11 @@ export interface IOrdersResponse {
     totalToday: number;
 }
 
+export interface IFoundOrderResponse {
+    orders: TOrder[];
+    success: boolean;
+}
+
 export interface IUserFormData {
     name: string;
     email: string;

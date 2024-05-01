@@ -1,7 +1,7 @@
 import styles from './info-order.module.css';
 import { useParams } from 'react-router-dom';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { WS_CONNECTION_START } from '../../services/constants';
+import { WS_CONNECTION_CLOSED, WS_CONNECTION_START } from '../../services/constants';
 import { useAppDispatch } from '../../hooks/useDispatch';
 import { useEffect, useState } from 'react';
 import { useSelector } from '../../hooks/useSelector';
@@ -20,17 +20,24 @@ function InfoOrder() {
         setConnectionEstablished(true);
         return () => {
             if (connectionEstablished) {
-                dispatch({ type: WS_CONNECTION_START });
+                dispatch({ type: WS_CONNECTION_CLOSED });
             }
         }
-    }, [dispatch, connectionEstablished]);
+    }, [connectionEstablished, dispatch]);
 
     const order = useSelector((state) => state.ws.orders);
     let price = 0;
-    const foundOrder = order.orders.find(order => order.number as unknown as string == numberString);
-    if (foundOrder !== undefined) {
-        if (numberString) dispatch(getFoundOrder(numberString))
+    let foundOrder = order.orders.find(order => order.number as unknown as string == numberString);
+    if (foundOrder === undefined) {
+        if (numberString) {
+            dispatch(getFoundOrder(numberString));
+        }
     }
+    const extraOrder = useSelector((state) => state.foundOrder.foundOrder.orders[0]);
+    if (extraOrder) {
+        foundOrder = extraOrder;
+    }
+
     const data = useSelector(getData).data as TIngredientItem[];
     let icons: string[] = [];
     let names: string[] = [];

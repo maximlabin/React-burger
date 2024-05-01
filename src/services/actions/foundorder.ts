@@ -1,9 +1,9 @@
 import { AppDispatch } from "../types";
 import { axiosInstance } from "../axios";
-import { WS_USER_URL } from "../../utils/apiConfig";
+import { BASE_URL } from "../../utils/apiConfig";
 import { GET_FOUND_ORDER_ERROR, GET_FOUND_ORDER_REQUEST, GET_FOUND_ORDER_SUCCESS } from "../constants";
 import { IOrdersResponse } from "../types/data";
-
+import { getCookie } from "../cookies";
 
 
 export interface IGetFoundOrderRequest {
@@ -26,11 +26,15 @@ export const getFoundOrder = (order: string) => (dispatch: AppDispatch) => {
     const fetchData = async () => {
         dispatch({ type: GET_FOUND_ORDER_REQUEST });
         try {
-            const { data: response } = await axiosInstance.get(`${WS_USER_URL}${order}`);
-            dispatch({ type: GET_FOUND_ORDER_SUCCESS, payload: response.data })
-        } catch (error) {
-            dispatch({ type: GET_FOUND_ORDER_ERROR, payload: error })
+            const { data: response } = await axiosInstance.get(`${BASE_URL}/orders/${order}`, {
+                headers: {
+                    token: getCookie('refreshToken'),
+                },
+            });
+            dispatch({ type: GET_FOUND_ORDER_SUCCESS, payload: response });
+        } catch (error: any) {
+            dispatch({ type: GET_FOUND_ORDER_ERROR, payload: error.message });
         }
-    }
+    };
     fetchData();
-}
+};

@@ -1,19 +1,19 @@
 import { TFoundOrderResponse } from "../actions/foundorder"
-import { IOrdersResponse } from "../types/data"
+import { IFoundOrderResponse } from "../types/data"
 import { GET_FOUND_ORDER_ERROR, GET_FOUND_ORDER_REQUEST, GET_FOUND_ORDER_SUCCESS } from "../constants";
 
 interface IFoundOrderState {
-    foundOrder: IOrdersResponse,
+    foundOrder: IFoundOrderResponse,
     isLoading: boolean
+    error: null | string
 }
 
 const initialState: IFoundOrderState = {
     isLoading: false,
+    error: null,
     foundOrder: {
         orders: [],
         success: false,
-        total: 0,
-        totalToday: 0
     }
 }
 
@@ -22,7 +22,8 @@ export const foundOrderReducer = (state = initialState, action: TFoundOrderRespo
         case GET_FOUND_ORDER_REQUEST:
             return {
                 ...state,
-                isLoading: true
+                isLoading: true,
+                error: null
             };
         case GET_FOUND_ORDER_SUCCESS:
             return {
@@ -33,6 +34,7 @@ export const foundOrderReducer = (state = initialState, action: TFoundOrderRespo
         case GET_FOUND_ORDER_ERROR:
             return {
                 ...state,
+                error: action.payload,
                 isLoading: false
             };
         default:

@@ -1,6 +1,6 @@
 import styles from './ingridient-details.module.css';
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../hooks/useSelector';
 import { getData } from '../../routes';
 import { TIngredientItem } from '../../services/types/data';
 

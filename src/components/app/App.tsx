@@ -9,8 +9,7 @@ import ProtectedRouteElement from "../protected-route/protected-route";
 import { useLocation, useNavigate } from "react-router-dom";
 import Modal from '../modal/modal';
 import InfoOrder from "../info-order/info-order";
-import { useAppDispatch } from "../../hooks/useDispatch";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../../hooks/useDispatch";;
 
 function App() {
     const dispatch = useAppDispatch();

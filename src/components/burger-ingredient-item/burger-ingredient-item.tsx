@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./burger-ingridient-item.module.css";
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrag } from "react-dnd";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../hooks/useSelector";
 import { getCount } from "../../routes";
 import { useLocation, Link } from "react-router-dom";
 import { TIngredientItem } from "../../services/types/data";
