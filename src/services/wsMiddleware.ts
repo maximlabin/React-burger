@@ -73,7 +73,6 @@ export const wsMiddleware = (wsUrl: string, actions: WsActions, { checkToken }: 
             }
 
             if (type === WS_GET_MESSAGE && socket && socket.readyState === WebSocket.OPEN) {
-                console.log('send');
                 socket.send(JSON.stringify(orders));
             }
 
