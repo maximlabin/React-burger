@@ -4,7 +4,7 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from '../../hooks/useSelector';
 import { TIngredientItem, TOrder } from '../../services/types/data';
-import { getData } from '../../routes'
+import { getData } from '../../routes';
 
 function OrdersInfo({ showStatus, orderList }: { showStatus: boolean, orderList: Array<TOrder> }) {
     const data = useSelector(getData).data as TIngredientItem[];
@@ -23,6 +23,7 @@ function OrdersInfo({ showStatus, orderList }: { showStatus: boolean, orderList:
                         const foundIngredient = data.find((ingredient: TIngredientItem) => ingredient._id === item);
                         if (!foundIngredient) return
                         if (!bunAdded) {
+                            price += foundIngredient.price || 0;
                             price += foundIngredient.price || 0;
                             pictures.push(foundIngredient.image_mobile);
                             bunAdded = true;
@@ -51,7 +52,7 @@ function OrdersInfo({ showStatus, orderList }: { showStatus: boolean, orderList:
                         return text;
                     }
                     return (
-                        <Link to={redirectPath} key={ingredient._id} className={`pr-6 pl-6 mb-4 ${styles.item}`}>
+                        <Link to={redirectPath} key={ingredient._id} state={{ backgroundLocation: location }} className={`pr-6 pl-6 mb-4 ${styles.item}`}>
                             <div className={`mb-6 mt-6 ${styles.title}`}>
                                 <h2 className='text text_type_digits-default'>#{ingredient.number}</h2>
                                 <h2 className='text text_type_main-default text_color_inactive'>{dataConverter(ingredient.createdAt)}</h2>

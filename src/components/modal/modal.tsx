@@ -28,7 +28,7 @@ function Modal({ onClick, children }: PropsWithChildren<IModal>) {
             <ModalOverlay onClick={onClick}>
                 <div className={`${styles.modal} pt-10`} onClick={(e) => e.stopPropagation()}>
                     <div className={styles.header}>
-                        <button className={`${styles.closeIcon} mt-15 mr-10`}>
+                        <button className={`${styles.closeIcon} mt-15 mr-10`} onClick={onClick}>
                             <CloseIcon type="primary" />
                         </button>
                     </div>

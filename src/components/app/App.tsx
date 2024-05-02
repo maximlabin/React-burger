@@ -46,6 +46,16 @@ function App() {
                             <IngredientDetails head={'Детали ингредиента'} />
                         </Modal>
                     } />
+                    <Route path='/feed/:number' element={
+                        <Modal onClick={handleCloseModal}>
+                            <InfoOrder />
+                        </Modal>
+                    } />
+                    <Route path='/profile/orders/:number' element={
+                        <Modal onClick={handleCloseModal}>
+                            <InfoOrder />
+                        </Modal>
+                    } />
 
                 </Routes>
             )

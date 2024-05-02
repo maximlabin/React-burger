@@ -9,22 +9,23 @@ import { getData } from '../../routes';
 import dataConverter from '../../utils/dataConverter';
 import { TIngredientItem } from '../../services/types/data';
 import { getFoundOrder } from '../../services/actions/foundorder';
+import { useLocation } from 'react-router-dom';
 
 function InfoOrder() {
+    const location = useLocation();
     const { number: numberString } = useParams();
+    const state = location.state;
     const dispatch = useAppDispatch();
 
-    let connectionEstablished = false;
-
+    const [connectionEstablished, setConnectionEstablished] = useState(false);
     useEffect(() => {
         dispatch({ type: WS_CONNECTION_START });
-        connectionEstablished = true;
         return () => {
             if (connectionEstablished) {
                 dispatch({ type: WS_CONNECTION_CLOSED });
             }
         }
-    }, []);
+    }, [connectionEstablished]);
 
     const order = useSelector((state) => state.ws.orders);
     let price = 0;
@@ -74,11 +75,11 @@ function InfoOrder() {
         return <h1 className='text text_type_main-medium'>Заказ не найден</h1>
     } else {
         return (
-            <section className={`${styles.main}`}>
-                <h1 className={`${styles.order} text text_type_digits-default mt-20 mb-10`}>#{numberString}</h1>
-                <h1 className={`text text_type_main-medium mb-3`}>Black Hole Singularity острый бургер</h1>
-                <h2 className={`text text_type_main-medium ${styles.composition}`}>Состав</h2>
+            <section className={`pb-10 ${styles.main}`}>
+                <h1 className={`${state?.backgroundLocation ? 'mt-4 mb-7' : `mt-20 mb-10 ${styles.order}`} text text_type_digits-default`}>#{numberString}</h1>
+                <h1 className={`text text_type_main-medium mb-3`}>{foundOrder.name}</h1>
                 <h3 className={`text text_type_main-default mb-15 mt-3 ${styles.status}`}>{statusValue(foundOrder.status)}</h3>
+                <h2 className={`text text_type_main-medium ${styles.composition}`}>Состав</h2>
                 <ul className={`mb-10 ${styles.list_order}`}>
                     {
                         icons.map((icon, index) => {
