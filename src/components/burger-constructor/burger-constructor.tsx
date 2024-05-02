@@ -5,25 +5,28 @@ import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import { useDrop } from "react-dnd";
 import BurgerConstructorItem from '../burger-constructor-item/burger-constructor-item';
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from '../../hooks/useSelector';
 import { addIngredient } from "../../services/actions";
 import { addOrder } from "../../services/actions/order";
 import { getIngredients, getOrderNumber, getBun } from "../../routes";
 import { useNavigate } from "react-router-dom";
 import uniqid from 'uniqid';
 import { TIngredient } from '../../services/types/data';
+import { useAppDispatch } from "../../hooks/useDispatch";
+import { IBun } from '../../services/reducers/ingredient-reducer';
+import { useEffect } from "react";
 
 function BurgerConstructor() {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const data = useSelector(getIngredients);
-    const bun = useSelector(getBun);
+    const bun = useSelector(getBun as () => IBun);
     const orderNumber = useSelector(getOrderNumber);
     const [isModalOpen, setModalOpen] = useState(false);
+    const [isOrderSent, setOrderSent] = useState(false);
     const onDropHandler = useCallback((item: TIngredient) => {
-        // @ts-ignore
         dispatch(addIngredient(item));
     }, [dispatch])
-    const { auth } = useSelector((store: any) => store.user);
+    const { auth } = useSelector((store) => store.user);
     const navigate = useNavigate();
 
     const [{ isOver }, dropRef] = useDrop({
@@ -56,11 +59,6 @@ function BurgerConstructor() {
         })
     });
 
-    interface IIngregient extends TIngredient {
-        isLocked?: boolean;
-        index: number;
-    }
-
     const item = {
         name: 'Выберите начинку',
         image: 'https://code.s3.yandex.net/react/code/meat-01.png',
@@ -82,15 +80,22 @@ function BurgerConstructor() {
         if (!auth) {
             navigate('/login');
         } else {
-            // @ts-ignore
-            dispatch(addOrder([bun, bun, ...data]));
+            const orderData = [bun, bun, ...data]
+            dispatch(addOrder(orderData as TIngredient[]));
             setModalOpen(true);
+            setOrderSent(true);
         }
     };
 
     const handleCloseModal = () => {
         setModalOpen(false);
     };
+
+    useEffect(() => {
+        if (isModalOpen && orderNumber) {
+            setOrderSent(false);
+        }
+    }, [isModalOpen, orderNumber]);
 
     const borderColor = isOver ? "#00cccc" : "#131316";
     const borderColorTopBun = isOverBun ? "#4c4cff" : "#131316";
@@ -112,7 +117,7 @@ function BurgerConstructor() {
                         )}
                     </div>
                     <div className={styles.scrollable} ref={dropRef} style={{ borderColor }}>
-                        {data && data.length >= 1 ? data.map((item: IIngregient, index: number) => (
+                        {data && data.length >= 1 ? data.map((item: TIngredient, index: number) => (
                             <div className={`${styles.scrollable_item} mr-2`} key={item.uniqId}>
                                 <BurgerConstructorItem item={item} index={index} isLocked={false} />
                             </div>
@@ -136,6 +141,13 @@ function BurgerConstructor() {
                     Оформить заказ
                 </Button>
             </div>
+            {isOrderSent && (
+                <Modal onClick={() => setOrderSent(false)}>
+                    <div className='mb-10 ml-5'>
+                        <p className={`text text_type_digits-default`}>Ваш заказ готовится</p>
+                    </div>
+                </Modal>
+            )}
             {isModalOpen && orderNumber && (
                 <Modal onClick={handleCloseModal}>
                     <OrderDetails _id={orderNumber} />

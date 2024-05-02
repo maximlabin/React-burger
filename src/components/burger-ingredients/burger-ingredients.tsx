@@ -2,12 +2,12 @@ import { useState, useRef } from 'react';
 import styles from './burger-ingredients.module.css';
 import BurgerIngredientItem from '../burger-ingredient-item/burger-ingredient-item';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../hooks/useSelector';
 import { getData, isLoad } from "../../routes";
 import { TIngredientItem } from '../../services/types/data';
 
 function BurgerIngredients() {
-    const { data } = useSelector(getData);
+    const { data } = useSelector(getData) as { data: TIngredientItem[] };
     const { isLoading } = useSelector(isLoad);
     const [current, setCurrent] = useState('bun');
 

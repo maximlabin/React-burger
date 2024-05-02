@@ -31,6 +31,29 @@ export type TIngredientItem = {
     index: number;
 };
 
+export type TOrder = {
+    _id: string;
+    name: string;
+    status: 'done' | 'pending' | 'created';
+    number: number;
+    ingredients: Array<string>;
+    orders: [];
+    createdAt: string;
+    updateAt: string;
+}
+
+export interface IOrdersResponse {
+    orders: TOrder[];
+    success: boolean;
+    total: number;
+    totalToday: number;
+}
+
+export interface IFoundOrderResponse {
+    orders: TOrder[];
+    success: boolean;
+}
+
 export interface IUserFormData {
     name: string;
     email: string;
@@ -49,8 +72,4 @@ export interface IModal {
 
 export interface IModalOverlay {
     onClick: () => void;
-}
-
-export interface IUser extends Omit<IUserFormData, 'password'> {
-    password: string | undefined;
 }

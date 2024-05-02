@@ -1,22 +1,22 @@
 import styles from './reset-password.module.css';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from '../../hooks/useSelector';
 import { useEffect, FormEvent } from 'react';
 import { resetPassword } from '../../services/actions/user';
 import { useForm } from '../../hooks/useForm';
+import { useAppDispatch } from '../../hooks/useDispatch';
 
 function ResetPassword() {
     const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const { auth } = useSelector((store: any) => store.user);
-    const check = useSelector((store: any) => store.user.resetPassword);
+    const dispatch = useAppDispatch();
+    const { auth } = useSelector((store) => store.user);
+    const check = useSelector((store) => store.user.resetPassword);
     const { values, handleChange } = useForm({ password: '', code: '' });
 
     const onResetPassword = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        // @ts-ignore
-        dispatch(resetPassword(values, navigate));
+        dispatch(resetPassword({ password: values.password, code: values.code }, navigate));
     }
 
     useEffect(() => {

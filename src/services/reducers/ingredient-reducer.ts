@@ -1,15 +1,26 @@
-import { GET_INGREDIENT_REQUEST, GET_INGREDIENT_SUCCESS, GET_INGREDIENT_ERROR } from '../actions/getIngredients';
-import { ADD_INGREDIENT, DELETE_INGREDIENT, MOVE_CARD, CLEAR_ADDED_INGREDIENTS } from '../actions/index';
+import { GET_INGREDIENT_REQUEST, GET_INGREDIENT_SUCCESS, GET_INGREDIENT_ERROR, ADD_INGREDIENT, DELETE_INGREDIENT, MOVE_CARD, CLEAR_ADDED_INGREDIENTS } from '../constants';
 import { TIngredientAction } from '../actions/index';
 import { TIngredientResponse } from '../actions/getIngredients';
 import { TIngredient, TIngredientItem } from '../types/data';
+import uniqid from 'uniqid';
 
 type TAction = TIngredientResponse | TIngredientAction;
-interface IBun {
+export interface IBun {
     name: string;
     type: string;
     image: string;
     price: number;
+    _id: string;
+    uniqId: string;
+    index?: number | null;
+    key?: number | null;
+    proteins?: number | null;
+    fat?: number | null;
+    carbohydrates?: number | null;
+    calories?: number | null;
+    image_mobile?: string | null;
+    image_large?: string | null;
+    __v?: number | null;
 }
 
 interface IIngredientState {
@@ -26,7 +37,18 @@ const initialState: IIngredientState = {
         name: 'Выберите булку',
         type: 'bun',
         image: 'https://code.s3.yandex.net/react/code/bun-01.png',
-        price: 0
+        price: 0,
+        _id: uniqid(),
+        uniqId: uniqid(),
+        index: null,
+        key: null,
+        proteins: null,
+        fat: null,
+        carbohydrates: null,
+        calories: null,
+        image_large: null,
+        image_mobile: null,
+        __v: null
     },
     addedIngredients: [],
     isLoading: true,
@@ -65,7 +87,9 @@ export const ingredientReducer = (state = initialState, action: TAction) => {
                     name: 'Добавить булку',
                     type: 'bun',
                     image: 'https://code.s3.yandex.net/react/code/bun-01.png',
-                    price: 0
+                    price: 0,
+                    _id: uniqid(),
+                    uniqId: uniqid(),
                 }
             }
         default:

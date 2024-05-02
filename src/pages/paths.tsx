@@ -5,5 +5,7 @@ import Login from './login/login';
 import ForgotPassword from './forgot-password/forgot-password'
 import ResetPassword from './reset-password/reset-password';
 import Profile from './profile/profile';
+import Orders from './orders/orders';
+import Feed from './feed/feed';
 
-export { HomePage, PageNotFound, Register, Login, ForgotPassword, ResetPassword, Profile };
+export { HomePage, PageNotFound, Register, Login, ForgotPassword, ResetPassword, Profile, Orders, Feed };

@@ -1,7 +1,9 @@
 import { TIngredientItem } from "../types/data";
 
-export const SET_SELECTED_INGREDIENT: 'SET_SELECTED_INGREDIENT' = 'SET_SELECTED_INGREDIENT';
-export const CLEAR_SELECTED_INGREDIENT: 'CLEAR_SELECTED_INGREDIENT' = 'CLEAR_SELECTED_INGREDIENT';
+import {
+    SET_SELECTED_INGREDIENT,
+    CLEAR_SELECTED_INGREDIENT
+} from "../constants";
 
 export interface ISetSelectedIngredient {
     readonly type: typeof SET_SELECTED_INGREDIENT;
