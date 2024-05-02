@@ -44,11 +44,19 @@ function InfoOrder() {
     let icons: string[] = [];
     let names: string[] = [];
     let prices: number[] = [];
+
+    let bun: boolean = true;
     if (foundOrder) {
         foundOrder.ingredients.forEach((item) => {
             const foundIngredient = data.find((ingredient: TIngredientItem) => ingredient._id === item);
             if (!foundIngredient) return
-            price += foundIngredient.price || 0;
+            if (foundIngredient.type === 'bun' && bun) {
+                price += foundIngredient.price * 2 || 0;
+                bun = false;
+            } else if (foundIngredient.type !== 'bun') {
+                price += foundIngredient.price || 0;
+            }
+            console.log(price, foundIngredient.type);
             icons.push(foundIngredient.image_mobile);
             names.push(foundIngredient.name);
             prices.push(foundIngredient.price);
@@ -77,7 +85,7 @@ function InfoOrder() {
         return (
             <section className={`pb-10 ${styles.main}`}>
                 <h1 className={`${state?.backgroundLocation ? 'mt-4 mb-7' : `mt-20 mb-10 ${styles.order}`} text text_type_digits-default`}>#{numberString}</h1>
-                <h1 className={`text text_type_main-medium mb-3`}>{foundOrder.name}</h1>
+                <h1 className={`text text_type_main-medium mb-3 ${styles.name}`}>{foundOrder.name}</h1>
                 <h3 className={`text text_type_main-default mb-15 mt-3 ${styles.status}`}>{statusValue(foundOrder.status)}</h3>
                 <h2 className={`text text_type_main-medium ${styles.composition}`}>Состав</h2>
                 <ul className={`mb-10 ${styles.list_order}`}>

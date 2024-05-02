@@ -23,8 +23,7 @@ function OrdersInfo({ showStatus, orderList }: { showStatus: boolean, orderList:
                         const foundIngredient = data.find((ingredient: TIngredientItem) => ingredient._id === item);
                         if (!foundIngredient) return
                         if (!bunAdded) {
-                            price += foundIngredient.price || 0;
-                            price += foundIngredient.price || 0;
+                            price += (foundIngredient.price * 2) || 0;
                             pictures.push(foundIngredient.image_mobile);
                             bunAdded = true;
                         } else if (foundIngredient.type !== 'bun') {

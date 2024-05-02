@@ -94,3 +94,17 @@
     text-align: start;
     color: var(--colors-interface-success);
 }
+
+.name {
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    white-space: nowrap; 
+    max-height: 45px;
+}
+
+.name:hover {
+    overflow: visible;
+    text-overflow: clip;
+    white-space: normal;
+    max-height: none;
+}
