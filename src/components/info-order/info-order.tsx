@@ -14,16 +14,17 @@ function InfoOrder() {
     const { number: numberString } = useParams();
     const dispatch = useAppDispatch();
 
-    const [connectionEstablished, setConnectionEstablished] = useState(false);
+    let connectionEstablished = false;
+
     useEffect(() => {
         dispatch({ type: WS_CONNECTION_START });
-        setConnectionEstablished(true);
+        connectionEstablished = true;
         return () => {
             if (connectionEstablished) {
                 dispatch({ type: WS_CONNECTION_CLOSED });
             }
         }
-    }, [connectionEstablished, dispatch]);
+    }, []);
 
     const order = useSelector((state) => state.ws.orders);
     let price = 0;

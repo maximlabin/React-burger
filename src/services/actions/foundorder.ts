@@ -29,7 +29,7 @@ export const getFoundOrder = (order: string) => (dispatch: AppDispatch) => {
             const { data: response } = await axiosInstance.get(`${BASE_URL}/orders/${order}`, {
                 headers: {
                     token: getCookie('refreshToken'),
-                },
+                }
             });
             dispatch({ type: GET_FOUND_ORDER_SUCCESS, payload: response });
         } catch (error: any) {
