@@ -56,7 +56,6 @@ function InfoOrder() {
             } else if (foundIngredient.type !== 'bun') {
                 price += foundIngredient.price || 0;
             }
-            console.log(price, foundIngredient.type);
             icons.push(foundIngredient.image_mobile);
             names.push(foundIngredient.name);
             prices.push(foundIngredient.price);
