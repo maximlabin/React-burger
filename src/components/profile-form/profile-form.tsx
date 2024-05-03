@@ -2,11 +2,11 @@ import styles from './profile-form.module.css';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useState, useEffect } from 'react';
 import { getUser, updateUser } from '../../services/actions/user';
-import { useDispatch } from 'react-redux';
 import { IUserFormData } from '../../services/types/data';
+import { useAppDispatch } from '../../hooks/useDispatch';
 
 function ProfileForm() {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const [userData, setUserData] = useState(
         {
             name: '',
@@ -15,7 +15,6 @@ function ProfileForm() {
         }
     )
     useEffect(() => {
-        // @ts-ignore
         dispatch(getUser(userData, setUserData));
     }, []);
 
@@ -30,12 +29,10 @@ function ProfileForm() {
     }
     const onSave = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        // @ts-ignore
-        dispatch(updateUser(userData, setUserData));
+        dispatch(updateUser(userData));
     }
     const onCancel = (e: React.SyntheticEvent<Element, Event>) => {
         e.preventDefault();
-        // @ts-ignore
         dispatch(getUser(userData, setUserData));
     }
 

@@ -6,7 +6,7 @@ import { NavLink, useMatch } from 'react-router-dom';
 
 function AppHeader() {
     const matchHome = useMatch("/");
-    const matchOrders = useMatch("/orders");
+    const matchOrders = useMatch("/feed");
     const matchProfile = useMatch("/profile");
 
     return (
@@ -16,13 +16,13 @@ function AppHeader() {
                     className={`${matchHome ? styles.activeButton : styles.button}`}
                     end>
                     <BurgerIcon type={matchHome ? "primary" : "secondary"} />
-                    <span>Конструктор</span>
+                    <span className="text text_type_main-default">Конструктор</span>
                 </NavLink>
-                <NavLink to="/orders"
+                <NavLink to="/feed"
                     className={`${matchOrders ? styles.activeButton : styles.button}`}
                     end>
                     <ListIcon type={matchOrders ? "primary" : "secondary"} />
-                    <span>Лента заказов</span>
+                    <span className="text text_type_main-default">Лента заказов</span>
                 </NavLink>
                 <NavLink to="/"
                     className={`${matchHome ? styles.activeButton : styles.button}`}
@@ -33,7 +33,7 @@ function AppHeader() {
                     className={`${matchProfile ? styles.activeButton : styles.button}`}
                     end>
                     <ProfileIcon type={matchProfile ? "primary" : "secondary"} />
-                    <span>Личный кабинет</span>
+                    <span className="text text_type_main-default">Личный кабинет</span>
                 </NavLink>
             </nav>
         </header>

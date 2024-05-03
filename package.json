@@ -14,6 +14,7 @@
     "@types/react-dom": "^18.2.18",
     "@ya.praktikum/react-developer-burger-ui-components": "^1.14.0",
     "axios": "^0.28.0",
+    "date-fns": "^3.6.0",
     "eslint": "^8.56.0",
     "react": "^18.2.0",
     "react-dnd": "^16.0.1",
@@ -55,6 +56,7 @@
   "devDependencies": {
     "@types/uniqid": "^5.3.4",
     "css-loader": "^6.8.1",
+    "fetch-mock": "^9.11.0",
     "style-loader": "^3.3.3"
   }
 }

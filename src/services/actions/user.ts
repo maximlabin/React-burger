@@ -2,13 +2,16 @@ import { BASE_URL } from "../../utils/apiConfig";
 import { setCookie, getCookie, deleteCookie } from '../cookies';
 import { axiosInstance } from "../axios";
 import { Dispatch } from "redux";
-import { IUser, IUserFormData } from '../types/data';
+import { IUserFormData } from '../types/data';
 import { NavigateFunction } from 'react-router-dom';
+import { AppDispatch } from "../types";
 
-export const CREATE_USER_REQUEST: 'CREATE_USER_REQUEST' = 'CREATE_USER_REQUEST';
-export const CREATE_USER_SUCCESS: 'CREATE_USER_SUCCESS' = 'CREATE_USER_SUCCESS';
-export const CREATE_USER_ERROR: 'CREATE_USER_ERROR' = 'CREATE_USER_ERROR';
-export const RESET_PASSWORD: 'RESET_PASSWORD' = 'RESET_PASSWORD';
+import {
+    CREATE_USER_REQUEST,
+    CREATE_USER_SUCCESS,
+    CREATE_USER_ERROR,
+    RESET_PASSWORD
+} from '../constants';
 
 export interface ICreateUserRequest {
     readonly type: typeof CREATE_USER_REQUEST;
@@ -138,7 +141,7 @@ export const logout = () => (dispatch: Dispatch) => {
         dispatch({ type: CREATE_USER_REQUEST });
         try {
             const response = await axiosInstance.post("/auth/logout", {
-                token: getCookie('refreshToken')
+                token: getCookie('refreshToken'),
             });
 
             const responseData = response.data;
@@ -157,9 +160,8 @@ export const logout = () => (dispatch: Dispatch) => {
     return fetchData();
 }
 
-export const getUser = (userData: IUser, setUserData: any) => (dispatch: Dispatch) => {
+export const getUser = (userData: IUserFormData, setUserData: any) => (dispatch: AppDispatch) => {
     if (!getCookie('accessToken')) {
-        // @ts-ignore
         dispatch(getNewToken());
     }
     const fetchData = async () => {
@@ -185,9 +187,8 @@ export const getUser = (userData: IUser, setUserData: any) => (dispatch: Dispatc
     return fetchData();
 }
 
-export const updateUser = (userData: IUser) => (dispatch: Dispatch) => {
+export const updateUser = (userData: IUserFormData) => (dispatch: AppDispatch) => {
     if (!getCookie('accessToken')) {
-        // @ts-ignore
         dispatch(getNewToken());
     }
     const fetchData = async () => {

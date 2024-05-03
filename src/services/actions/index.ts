@@ -1,10 +1,12 @@
 import uniqid from 'uniqid';
 import { TIngredient } from '../types/data';
 
-export const ADD_INGREDIENT: 'ADD_INGREDIENT' = 'ADD_INGREDIENT';
-export const DELETE_INGREDIENT: 'DELETE_INGREDIENT' = 'DELETE_INGREDIENT';
-export const MOVE_CARD: 'MOVE_CARD' = 'MOVE_CARD';
-export const CLEAR_ADDED_INGREDIENTS: 'CLEAR_ADDED_INGREDIENTS' = 'CLEAR_ADDED_INGREDIENTS';
+import {
+    ADD_INGREDIENT,
+    DELETE_INGREDIENT,
+    MOVE_CARD,
+    CLEAR_ADDED_INGREDIENTS
+} from '../constants';
 
 export interface IAddIngredient {
     readonly type: typeof ADD_INGREDIENT;

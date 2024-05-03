@@ -11,6 +11,19 @@
     background-color: var(--background-alt);
 }
 
+.active_link {
+    display: flex;
+    color: var(--white);
+    text-decoration: none;
+    align-items: center;
+    border: none;
+    outline: none;
+    padding: 0;
+    height: 64px;
+    text-align: start;
+    background-color: var(--background-alt);
+}
+
 .menu {
     display: flex;
     justify-content: start;

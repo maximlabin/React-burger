@@ -1,4 +1,4 @@
-import { CREATE_USER_REQUEST, CREATE_USER_SUCCESS, CREATE_USER_ERROR, RESET_PASSWORD } from "../actions/user";
+import { CREATE_USER_REQUEST, CREATE_USER_SUCCESS, CREATE_USER_ERROR, RESET_PASSWORD } from "../constants";
 import { getCookie } from '../cookies';
 import { TUser } from '../actions/user';
 interface IAuthState {

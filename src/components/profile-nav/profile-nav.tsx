@@ -1,23 +1,24 @@
 import styles from './profile-nav.module.css';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useMatch } from 'react-router-dom';
 import { logout } from '../../services/actions/user';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../../hooks/useDispatch';
 
 function ProfileNav() {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
+    const matchOrders = useMatch("/profile/orders");
+    const matchProfile = useMatch("/profile");
 
     const onLogout = (e: React.SyntheticEvent) => {
         e.preventDefault();
-        // @ts-ignore
         dispatch(logout());
     };
 
     return (
-        <div className={styles.menu}>
-            <NavLink to={'/profile'} className={`${styles.link} text_type_main-medium`}>
+        <div className={`${styles.menu} text_type_main-medium`}>
+            <NavLink to={'/profile'} className={matchProfile ? styles.active_link : styles.link} end>
                 Профиль
             </NavLink>
-            <NavLink to={'/order'} className={`${styles.link} text_type_main-medium`}>
+            <NavLink to={'/profile/orders'} className={matchOrders ? styles.active_link : styles.link} end>
                 История заказов
             </NavLink>
             <button className={`${styles.link} text_type_main-medium`} onClick={e => onLogout(e)}>

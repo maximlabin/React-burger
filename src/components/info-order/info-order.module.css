@@ -1,0 +1,110 @@
+.main {
+    margin: 0 auto;
+    max-width: 520px;
+    position: relative;
+}
+  
+.order {
+    color: white;
+    text-align: center;
+    text-shadow: 0px 0px 16px rgba(51, 51, 255, 0.25), 0px 0px 8px rgba(51, 51, 255, 0.25), 0px 4px 32px rgba(51, 51, 255, 0.5);
+}
+
+.order_id {
+    text-align: center;
+    margin-top: 0;
+}
+
+.composition {
+    text-align: start;
+}
+
+.price {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+.list_order {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    list-style: none;
+    max-height: 410px;
+    overflow-y: scroll;
+}
+
+.list_order::-webkit-scrollbar {
+    width: 8px;
+}
+  
+.list_order::-webkit-scrollbar-thumb {
+    background: #8585AD;
+    max-height: 410px;
+}
+  
+.list_order::-webkit-scrollbar-track {
+    background: #2F2F37;
+    margin-bottom: 50px;
+}
+
+.list_item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.list_item_icon {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+}
+
+.list_item_text {
+    margin: 0;
+    text-align: center;
+}
+
+.icon {
+    margin: 0;
+    object-fit: cover;
+    width: 64px;
+    height: 64px;
+    margin-left: -12px;
+    background-image: linear-gradient(black, black),
+    linear-gradient(to right, #7723C0, #5644F2);
+    background-origin: border-box;
+    border-radius: 50%;
+    border: double 2px transparent;
+    background-clip: content-box, border-box;
+}
+
+.status {
+    text-align: start;
+    color: var(--colors-interface-success);
+}
+
+.name {
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    white-space: nowrap; 
+    max-height: 45px;
+}
+
+.name:hover {
+    overflow: visible;
+    text-overflow: clip;
+    white-space: normal;
+    max-height: none;
+}

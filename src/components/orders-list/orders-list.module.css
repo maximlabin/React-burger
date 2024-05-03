@@ -1,0 +1,101 @@
+.main {
+    margin: 0 5px;
+    position: relative;
+    width: 100%;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.item {
+    min-width: 536px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    color: var(--text-primary-color);
+    text-decoration: none;
+    gap: 24px;
+    border-radius: 20px;
+    overflow-x: hidden;
+    background-color: var(--background);
+}
+
+
+.order_price {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    min-width: 526px;
+}
+
+.title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    min-width: 526px;
+}
+
+.ingredient {
+    text-align: start;
+}
+
+.price {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.ingredient_picture {
+    display: flex;
+    position: relative;
+}
+
+.img {
+    margin: 0;
+    object-fit: cover;
+    width: 64px;
+    height: 64px;
+    margin-left: -12px;
+    background-image: linear-gradient(black, black),
+    linear-gradient(to right, #7723C0, #5644F2);
+    background-origin: border-box;
+    border-radius: 50%;
+    border: double 2px transparent;
+    background-clip: content-box, border-box;
+}
+
+.last_img {
+    margin: 0;
+    object-fit: cover;
+    width: 64px;
+    height: 64px;
+    margin-left: -12px;
+    background-image: linear-gradient(black, black),
+    linear-gradient(to right, #7723C0, #5644F2);
+    background-origin: border-box;
+    border-radius: 50%;
+    border: double 2px transparent;
+    background-clip: content-box, border-box;
+    opacity: 0.5;
+}
+
+.more {
+    position: absolute;
+    z-index: 10;
+    text-align: center;
+    height: 64px;
+    width: 64px;
+    right: 0;
+    color: #F2F2F3;
+    opacity: 1;
+    line-height: 64px;
+}
+
+.status {
+    text-align: start;
+    color: var(--colors-interface-success);
+}
