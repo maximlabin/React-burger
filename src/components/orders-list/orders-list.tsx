@@ -17,15 +17,15 @@ function OrdersInfo({ showStatus, orderList }: { showStatus: boolean, orderList:
 
                     let pictures: string[] = [];
                     let price = 0;
-                    let bunAdded = false;
+                    let bun = true;
 
                     ingredient.ingredients.forEach((item) => {
                         const foundIngredient = data.find((ingredient: TIngredientItem) => ingredient._id === item);
                         if (!foundIngredient) return
-                        if (!bunAdded) {
+                        if (foundIngredient.type === 'bun' && bun) {
                             price += (foundIngredient.price * 2) || 0;
                             pictures.push(foundIngredient.image_mobile);
-                            bunAdded = true;
+                            bun = false;
                         } else if (foundIngredient.type !== 'bun') {
                             pictures.push(foundIngredient.image_mobile);
                             price += foundIngredient.price || 0;
