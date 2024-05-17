@@ -33,6 +33,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "cypress": "cypress open",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -56,6 +57,7 @@
   "devDependencies": {
     "@types/uniqid": "^5.3.4",
     "css-loader": "^6.8.1",
+    "cypress": "^13.8.1",
     "fetch-mock": "^9.11.0",
     "style-loader": "^3.3.3"
   }

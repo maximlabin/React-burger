@@ -34,12 +34,11 @@ export type TIngredientItem = {
 export type TOrder = {
     _id: string;
     name: string;
-    status: 'done' | 'pending' | 'created';
+    status: "done" | "pending" | "created";
     number: number;
     ingredients: Array<string>;
-    orders: [];
     createdAt: string;
-    updateAt: string;
+    updatedAt: string;
 }
 
 export interface IOrdersResponse {

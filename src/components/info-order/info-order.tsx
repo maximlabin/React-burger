@@ -8,7 +8,7 @@ import { useSelector } from '../../hooks/useSelector';
 import { getData } from '../../routes';
 import dataConverter from '../../utils/dataConverter';
 import { TIngredientItem } from '../../services/types/data';
-import { getFoundOrder } from '../../services/actions/foundorder';
+import { getFoundOrder } from '../../services/actions/foundOrder';
 import { useLocation } from 'react-router-dom';
 
 function InfoOrder() {
@@ -20,6 +20,7 @@ function InfoOrder() {
     const [connectionEstablished, setConnectionEstablished] = useState(false);
     useEffect(() => {
         dispatch({ type: WS_CONNECTION_START });
+        setConnectionEstablished(true);
         return () => {
             if (connectionEstablished) {
                 dispatch({ type: WS_CONNECTION_CLOSED });
@@ -28,39 +29,53 @@ function InfoOrder() {
     }, [connectionEstablished]);
 
     const order = useSelector((state) => state.ws.orders);
-    let price = 0;
+
     let foundOrder = order.orders.find(order => order.number as unknown as string == numberString);
     if (foundOrder === undefined) {
         if (numberString) {
             dispatch(getFoundOrder(numberString));
         }
     }
+
     const extraOrder = useSelector((state) => state.foundOrder.foundOrder.orders[0]);
-    if (extraOrder) {
+
+    if (extraOrder && foundOrder === undefined) {
         foundOrder = extraOrder;
     }
 
     const data = useSelector(getData).data as TIngredientItem[];
-    let icons: string[] = [];
-    let names: string[] = [];
-    let prices: number[] = [];
 
-    let bun: boolean = true;
+    let priceSum: number = 0;
+    let consolidatedIngredients: { [key: string]: { name: string, price: number, quantity: number, icon: string } } = {};
+
     if (foundOrder) {
+        let bun: boolean = true;
+
         foundOrder.ingredients.forEach((item) => {
             const foundIngredient = data.find((ingredient: TIngredientItem) => ingredient._id === item);
-            if (!foundIngredient) return
+            if (!foundIngredient) return;
+
+            if (!consolidatedIngredients[foundIngredient._id]) {
+                consolidatedIngredients[foundIngredient._id] = {
+                    name: foundIngredient.name,
+                    price: foundIngredient.price || 0,
+                    quantity: 0,
+                    icon: foundIngredient.image_mobile
+                };
+            }
+
+            consolidatedIngredients[foundIngredient._id].quantity++;
+
             if (foundIngredient.type === 'bun' && bun) {
-                price += foundIngredient.price * 2 || 0;
+                priceSum += foundIngredient.price * 2 || 0;
                 bun = false;
             } else if (foundIngredient.type !== 'bun') {
-                price += foundIngredient.price || 0;
+                priceSum += foundIngredient.price || 0;
             }
-            icons.push(foundIngredient.image_mobile);
-            names.push(foundIngredient.name);
-            prices.push(foundIngredient.price);
         });
     }
+    const consolidatedIngredientsList = Object.values(consolidatedIngredients);
+
     const statusValue = (status: 'created' | 'done' | 'pending') => {
         let text = '';
         switch (status) {
@@ -89,14 +104,16 @@ function InfoOrder() {
                 <h2 className={`text text_type_main-medium ${styles.composition}`}>Состав</h2>
                 <ul className={`mb-10 ${styles.list_order}`}>
                     {
-                        icons.map((icon, index) => {
+                        consolidatedIngredientsList.map((ingredient, index) => {
                             return (
                                 <li key={index} className={`ml-3 mr-6 ${styles.list_item}`}>
                                     <div className={styles.list_item_icon}>
-                                        <img src={icon} className={styles.icon} alt="ingredient" />
-                                        <p className={`text text_type_main-default ${styles.list_item_text}`}>{names[index]}</p>
+                                        <img src={ingredient.icon} className={styles.icon} alt="ingredient" />
+                                        <p className={`text text_type_main-default ${styles.list_item_text}`}>
+                                            {ingredient.name}
+                                        </p>
                                     </div>
-                                    <p className={`text text_type_main-default ${styles.list_item_text}`}>{prices[index]}</p>
+                                    <p className={`text text_type_main-default ${styles.list_item_text}`}>{ingredient.quantity} x {ingredient.price}</p>
                                 </li>
                             )
                         })
@@ -105,7 +122,7 @@ function InfoOrder() {
                 <div className={`${styles.footer}`}>
                     <p className={`text text_type_main-default text_color_inactive`}>{dataConverter(foundOrder.createdAt)}</p>
                     <div className={`${styles.price}`}>
-                        <p className={`text text_type_main-default`}>{price}</p>
+                        <p className={`text text_type_main-default`}>{priceSum}</p>
                         <CurrencyIcon type="primary" />
                     </div>
                 </div>

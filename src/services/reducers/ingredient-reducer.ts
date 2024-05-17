@@ -31,7 +31,7 @@ interface IIngredientState {
     error: string | undefined;
 }
 
-const initialState: IIngredientState = {
+export const initialState: IIngredientState = {
     data: [],
     bun: {
         name: 'Выберите булку',

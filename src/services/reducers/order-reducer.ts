@@ -7,7 +7,7 @@ interface OrderState {
     error: null | string;
 }
 
-const initialState: OrderState = {
+export const initialState: OrderState = {
     order: null,
     isLoading: false,
     error: null
@@ -18,20 +18,20 @@ export const orderReducer = (state = initialState, action: TOrder) => {
         case CREATE_ORDER_REQUEST:
             return {
                 ...state,
-                loading: true,
+                isLoading: true,
                 error: null
             };
         case CREATE_ORDER_SUCCESS:
             return {
                 ...state,
-                loading: false,
+                isLoading: false,
                 order: action.payload,
                 error: null
             };
         case CREATE_ORDER_ERROR:
             return {
                 ...state,
-                loading: false,
+                isLoading: false,
                 order: null,
                 error: action.payload
             };

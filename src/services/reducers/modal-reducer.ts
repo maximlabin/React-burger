@@ -6,7 +6,7 @@ interface IModalState {
     selectedIngredient: TIngredientItem | null;
 }
 
-const initialState: IModalState = {
+export const initialState: IModalState = {
     selectedIngredient: null,
 };
 

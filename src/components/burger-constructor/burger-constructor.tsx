@@ -144,7 +144,7 @@ function BurgerConstructor() {
             {isOrderSent && (
                 <Modal onClick={() => setOrderSent(false)}>
                     <div className='mb-10 ml-5'>
-                        <p className={`text text_type_digits-default`}>Ваш заказ готовится</p>
+                        <p className={`text text_type_main-large`}>Ваш заказ готовится</p>
                     </div>
                 </Modal>
             )}
