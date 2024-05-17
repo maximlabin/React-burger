@@ -8,7 +8,7 @@ interface IAuthState {
     error: boolean;
 }
 
-const initialState: IAuthState = {
+export const initialState: IAuthState = {
     auth: !!getCookie('accessToken'),
     resetPassword: false,
     isLoading: false,

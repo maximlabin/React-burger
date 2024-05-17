@@ -8,7 +8,7 @@ type TWSUserState = {
     orders: IOrdersResponse;
 }
 
-const initialState: TWSUserState = {
+export const initialState: TWSUserState = {
     wsConnected: false,
     orders: {
         orders: [],

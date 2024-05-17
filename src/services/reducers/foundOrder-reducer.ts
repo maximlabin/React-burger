@@ -1,14 +1,14 @@
-import { TFoundOrderResponse } from "../actions/foundorder"
+import { TFoundOrderResponse } from "../actions/foundOrder"
 import { IFoundOrderResponse } from "../types/data"
 import { GET_FOUND_ORDER_ERROR, GET_FOUND_ORDER_REQUEST, GET_FOUND_ORDER_SUCCESS } from "../constants";
 
-interface IFoundOrderState {
+export interface IFoundOrderState {
     foundOrder: IFoundOrderResponse,
     isLoading: boolean
     error: null | string
 }
 
-const initialState: IFoundOrderState = {
+export const initialState: IFoundOrderState = {
     isLoading: false,
     error: null,
     foundOrder: {
